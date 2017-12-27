@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'b&i%0t#ezleoyei%!36$otd(qr2%0bi_#mu(=3a-l^npvii4^4'
+try:
+    with open(os.path.join(BASE_DIR, 'hawkins', 'secret_key.txt')) as f:
+        SECRET_KEY = f.read().strip()
+except FileNotFoundError:
+    msg = "You need to create a 'secret_key.txt' file containing the secret key\
+    inside 'hawkins' folder."
+    raise ImproperlyConfigured(msg)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

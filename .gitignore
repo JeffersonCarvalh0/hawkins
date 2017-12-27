@@ -102,3 +102,6 @@ ENV/
 
 # sqlite
 *.sqlite3
+
+# secret_key
+hawkins/secret_key.txt
