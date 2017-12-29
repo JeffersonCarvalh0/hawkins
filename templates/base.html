@@ -18,12 +18,10 @@
 <body>
     <div class="container">
         {% block body %}
-            <h1>{% trans "Hello World!!!" %}</h1>
-            <h3>{% trans "Today is: " %} {{ today }} </h3>
         {% endblock %}
     </div>
     <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 </body>
 </html>
