@@ -11,7 +11,9 @@ pip install -r requirements.txt
 
 ## Django's secret key
 This project has the **DJANGO_KEY** variable hidden.
+
 You can generate your DJANGO_KEY http://www.miniwebtool.com/django-secret-key-generator
+
 To include it in your project, create a file named *secret_key.txt* inside the
 *hawkins* folder with the generated key inside it, in the first line of the file.
 
