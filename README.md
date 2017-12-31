@@ -19,12 +19,12 @@ To include it in your project, create a file named *secret_key.txt* inside the
 
 The  application starts by running the *run.py* file.
 
-## Built With
+# Built With
 * [Django](https://www.djangoproject.com/) - Web framework
 * [SQLite3](https://www.sqlite.org/) - DBMS
 * [CEF Python](https://github.com/cztomczak/cefpython) - Desktop GUI
 * [Materialize](http://materializecss.com/) - Front-end framework
 
-## License
+# License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
