@@ -1,8 +1,12 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from .utils import document_path
 
 # Create your models here.
+
+AVG = 7.0
+
 class Student(models.Model):
     '''
         A Student in the school.
@@ -23,10 +27,13 @@ class Student(models.Model):
 
 class Document(models.Model):
     '''
-        A Student's document.
+        A Student's document that can identify him or her.
     '''
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    document = models.FileField(_('Document'), upload_to=student.registry)
+    document = models.FileField(_('Document'), upload_to=document_path)
+
+    class Meta:
+        verbose_name = _('Document')
 
 class Subject(models.Model):
     '''
@@ -35,11 +42,6 @@ class Subject(models.Model):
         but it may vary depending on the school.
     '''
     name = models.CharField(_('Name'), max_length=255)
-    grade1 = models.FloatField(_('Grade 1'), null=True)
-    grade2 = models.FloatField(_('Grade 2'), null=True)
-    grade3 = models.FloatField(_('Grade 3'), null=True)
-    grade4 = models.FloatField(_('Grade 4'), null=True)
-    rec = models.FloatField(_('Recuperation'), null=True)
     partial_avg = models.FloatField(_('Partial average'), default=0)
     total_avg = models.FloatField(_('Total average'), default=0)
     approved = models.BooleanField(_('Approved'), default=False)
@@ -53,8 +55,19 @@ class Subject(models.Model):
     def __str__(self):
         return '%s, %s, %s' %(self.student, self.name, self.school_class)
 
-    def calcPartialAvg(self):
-        pass
+class Grade(models.Model):
+    '''
+        A Student's grade of some subject.
+    '''
+    grade = models.FloatField(_('Grade'))
+    subject = models.ForeignKey('Subject', on_delete=models.CASCADE)
+    retake = models.BooleanField(_('Retake'), default=False)
+
+    class Meta:
+        verbose_name = _('Grade')
+
+    def __str__(self):
+        return '%s, %s, %.2f' %(self.subject.student, self.subject.name, self.grade)
 
 class Class(models.Model):
     name = models.CharField(_('Name'), max_length=5)
