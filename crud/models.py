@@ -42,9 +42,6 @@ class Subject(models.Model):
         but it may vary depending on the school.
     '''
     name = models.CharField(_('Name'), max_length=255)
-    partial_avg = models.FloatField(_('Partial average'), default=0)
-    total_avg = models.FloatField(_('Total average'), default=0)
-    approved = models.BooleanField(_('Approved'), default=False)
     school_class = models.ForeignKey('Class', on_delete=models.CASCADE)
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
 

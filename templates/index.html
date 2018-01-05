@@ -2,15 +2,31 @@
 {% load i18n %}
 
 {% block body %}
-    <h1>{% trans "Hello World!!!" %}</h1>
-    <h3>{% trans "Today is: " %} {{ today }}</h3>
+    <div class="section center-align">
+        <h1>{% trans "Welcome to Hawkins!!!" %}</h1>
+        <h3>{% trans "Please, select your action:" %}</h3>
+    </div>
 
-    <blockquote > {% trans "Current language is: " %} {{ cur_lang }} </blockquote>
-
-    <form action="/i18n/setlang/" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="language" value="{{ lang }}">
-        <button type="submit" class="btn"> {{ lang }} </button>
-    </form>
+    <div class="section">
+        <table class="highlight">
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="{% url 'students' %}"> {% trans "Manage students" %} </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{% url 'classes' %}"> {% trans "Manage classes" %} </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{% url 'settings' %}"> {% trans "Settings" %} </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}
