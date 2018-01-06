@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from cefpython3 import cefpython as cef
-from subprocess import Popen, PIPE
+from subprocess import Popen
 import sys, os, signal
 
 # Creates the browser window which will show django's server
