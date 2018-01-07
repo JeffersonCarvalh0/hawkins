@@ -24,7 +24,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
+    path('', views.Index.as_view(), name='index'),
     path('students/', views.students, name='students'),
     path('classes/', views.classes, name='classes'),
     path('settings/', views.settings, name='settings')
