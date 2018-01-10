@@ -25,7 +25,11 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('', views.Index.as_view(), name='index'),
-    path('students/', views.students, name='students'),
+    path('students/', views.Students.as_view(), name='students'),
+    path('students/register', views.students_register, name='students_register'),
+    path('students/detail', views.students_detail, name='students_detail'),
+    path('students/update', views.students_update, name='students_update'),
+    path('students/delete', views.students_delete, name='students_delete'),
     path('classes/', views.classes, name='classes'),
     path('settings/', views.settings, name='settings')
 )

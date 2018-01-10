@@ -1,29 +1,40 @@
+from .models import Student
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.views import View
+from django.views.generic import TemplateView
 
 # Create your views here.
 
-class Index(View):
+class Index(TemplateView):
     template_name = 'index.html'
-    context = {}
     name = _('index')
 
-    def get(self, request):
-        request.session['breadcrumb'] = [self.name,]
-        self.context['request'] = request
-        return render(request, self.template_name, self.context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.request.session['breadcrumb'] = [self.name,]
+        return context
 
-    def post(self, request):
-        return self.get(request)
+class Students(TemplateView):
+    template_name = 'students.html'
+    name = _('students')
 
-# def index(request):
-#     context = {}
-#     request.session['breadcrumb'] = ['']
-#     return render(request, 'index.html', {})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.request.session['breadcrumb'].append(self.name)
+        return context
 
-def students(request):
-    return render(request, 'students.html', {})
+def students_register(request):
+    return render(request, 'students_create.html', {})
+
+def students_detail(request):
+    return render(request, 'students_read.html', {})
+
+def students_update(request):
+    return render(request, 'students_update.html', {})
+
+def students_delete(request):
+    return render(request, 'students_delete.html', {})
 
 def classes(request):
     return render(request, 'classes.html', {})

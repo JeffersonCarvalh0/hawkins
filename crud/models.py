@@ -23,7 +23,7 @@ class Student(models.Model):
         return '%s, %s' %(self.name, self.registry)
 
     def get_absolute_url(self):
-        return reverse('student', args=[str(self.id)])
+        return reverse('student_detail', args=[str(self.id)])
 
 class Document(models.Model):
     '''
@@ -77,4 +77,4 @@ class Class(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('class', args=[str(self.id)])
+        return reverse('class_detail', args=[str(self.id)])
