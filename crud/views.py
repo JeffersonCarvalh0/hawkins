@@ -15,20 +15,14 @@ class Index(TemplateView):
         self.request.session['breadcrumb'] = [self.name,]
         return context
 
-class Students(TemplateView):
-    template_name = 'students.html'
-    name = _('students')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        self.request.session['breadcrumb'].append(self.name)
-        return context
+def students_list(request):
+    return render(request, 'students_list.html', {})
 
 def students_register(request):
-    return render(request, 'students_create.html', {})
+    return render(request, 'students_register.html', {})
 
 def students_detail(request):
-    return render(request, 'students_read.html', {})
+    return render(request, 'students_detail.html', {})
 
 def students_update(request):
     return render(request, 'students_update.html', {})
@@ -36,8 +30,20 @@ def students_update(request):
 def students_delete(request):
     return render(request, 'students_delete.html', {})
 
-def classes(request):
-    return render(request, 'classes.html', {})
+def classes_list(request):
+    return render(request,'classes_list.html', {})
+
+def classes_register(request):
+    return render(request, 'classes_register.html', {})
+
+def classes_detail(request):
+    return render(request, 'classes_detail.html', {})
+
+def classes_update(request):
+    return render(request, 'classes_update.html', {})
+
+def classes_delete(request):
+    return render(request, 'classes_delete.html', {})
 
 def settings(request):
     return render(request, 'settings.html', {})

@@ -7,26 +7,43 @@
         <h3>{% trans "Please, select your action:" %}</h3>
     </div>
 
-    <div class="section">
-        <table class="highlight">
-            <tbody>
-                <tr>
-                    <td>
-                        <a href="{% url 'students' %}"> {% trans "Manage students" %} </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="{% url 'classes' %}"> {% trans "Manage classes" %} </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="{% url 'settings' %}"> {% trans "Settings" %} </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <ul class="collapsible" data-collapsible="accordion">
+        <li>
+            <div class="collapsible-header"><i class="material-icons">person</i>{% trans "Manage Students" %}</div>
+            <div class="collapsible-body">
+                <span>
+                    <a href="{% url 'students_register' %}"> {% trans "Register new student" %} </a>
+                </span>
+            </div>
+            <div class="collapsible-body">
+                <span>
+                    <a href="{% url 'students_list' %}"> {% trans "Search for student" %} </a>
+                </span>
+            </div>
+        </li>
+
+        <li>
+            <div class="collapsible-header"><i class="material-icons">class</i>{% trans "Manage classes" %}</div>
+            <div class="collapsible-body">
+                <span>
+                    <a href="{% url 'classes_register' %}"> {% trans "Register new class" %} </a>
+                </span>
+            </div>
+            <div class="collapsible-body">
+                <span>
+                    <a href="{% url 'classes_list' %}"> {% trans "Search for class" %} </a>
+                </span>
+            </div>
+        </li>
+
+        <li>
+            <div class="collapsible-header"><i class="material-icons">list</i>{% trans "Other options" %}</div>
+            <div class="collapsible-body">
+                <span>
+                    <a href="{% url 'settings' %}"> {% trans "Settings" %} </a>
+                </span>
+            </div>
+        </li>
+    </ul>
 
 {% endblock %}
