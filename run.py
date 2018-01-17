@@ -2,33 +2,19 @@
 
 from cefpython3 import cefpython as cef
 from subprocess import Popen
-import sys, os, signal
+import sys
 
-# Creates the browser window which will show django's server
-
-SIGNAL = signal.CTRL_C_EVENT if os.name == 'nt' else signal.SIGINT
-
-class Server:
-    def __init__(self, process):
-        self.server = process
-
-    def myExceptHook(self, type, value, traceback):
-        os.kill(self.server.pid, SIGNAL)
-        cef.ExceptHook(type, value, traceback)
+# Creates the browser window which will show django's page
 
 def main():
-    args = ['python', 'manage.py', 'runserver']
-    process = Popen(args)
-    serverInstance = Server(process)
-    sys.excepthook = serverInstance.myExceptHook
-
     cef.Initialize()
-    cef.CreateBrowserSync(url='localhost:8000', window_title='Hawkings')
-    cef.MessageLoop()
-    cef.Shutdown()
+    sys.excepthook = cef.ExceptHook
 
-    os.kill(serverInstance.server.pid, SIGNAL)
-
+    args = ['python', 'manage.py', 'runserver']
+    with Popen(args) as subprocess:
+        cef.CreateBrowserSync(url='localhost:8000', window_title='Hawkings')
+        cef.MessageLoop()
+        cef.Shutdown()
 
 if __name__ == '__main__':
     main()
