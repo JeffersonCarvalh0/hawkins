@@ -24,9 +24,6 @@ def students_register(request):
 def students_detail(request):
     return render(request, 'students_detail.html', {})
 
-def students_update(request):
-    return render(request, 'students_update.html', {})
-
 def students_delete(request):
     return render(request, 'students_delete.html', {})
 
@@ -38,9 +35,6 @@ def classes_register(request):
 
 def classes_detail(request):
     return render(request, 'classes_detail.html', {})
-
-def classes_update(request):
-    return render(request, 'classes_update.html', {})
 
 def classes_delete(request):
     return render(request, 'classes_delete.html', {})
