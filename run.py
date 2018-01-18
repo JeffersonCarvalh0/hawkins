@@ -37,8 +37,20 @@ def main():
     exceptHandler = ExceptHookWrapper(subprocess)
     sys.excepthook = exceptHandler.myExceptHook
 
-    cef.Initialize()
-    browser = cef.CreateBrowserSync(url='localhost:8000', window_title='Hawkings')
+    cef.Initialize(
+        settings={
+            'context_menu' : {
+                'enabled' : True,
+                'navigation' : True,
+                'print' : False,
+                'view_source' : False,
+                'external_browser' : False,
+                'devtools' : False,
+            }
+        }
+    )
+
+    browser = cef.CreateBrowserSync(url='localhost:8000', window_title='Hawkings',)
     browser.SetClientHandler(LoadHandler())
     cef.MessageLoop()
     cef.Shutdown()
