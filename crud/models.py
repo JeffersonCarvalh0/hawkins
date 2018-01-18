@@ -1,18 +1,16 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from .utils import document_path
+from .utils import documentPath, getLanguageChoices
 
 # Create your models here.
-
-AVG = 7.0
 
 class Settings(models.Model):
     '''
         Application's settings
     '''
     avg = models.FloatField(_('Average'))
-    lang = models.CharField(_('Language'), max_length=25)
+    lang = models.CharField(_('Language'), max_length=25, choices=getLanguageChoices())
 
 class Student(models.Model):
     '''
@@ -37,7 +35,7 @@ class Document(models.Model):
         A Student's document that can identify him or her.
     '''
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    document = models.FileField(_('Document'), upload_to=document_path)
+    document = models.FileField(_('Document'), upload_to=documentPath)
 
     class Meta:
         verbose_name = _('Document')
