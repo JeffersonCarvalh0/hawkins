@@ -7,6 +7,13 @@ from .utils import document_path
 
 AVG = 7.0
 
+class Settings(models.Model):
+    '''
+        Application's settings
+    '''
+    avg = models.FloatField(_('Average'))
+    lang = models.CharField(_('Language'), max_length=25)
+
 class Student(models.Model):
     '''
         A Student in the school.
