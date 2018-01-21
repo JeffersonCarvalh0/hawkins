@@ -21,6 +21,7 @@ class Student(models.Model):
     registry = models.CharField(_('Registry'), max_length=30)
     birth = models.DateField(_('Birth date'), null=True)
     school_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True)
+    document = models.FileField(_('Document'), upload_to=documentPath)
 
     class Meta:
         verbose_name = _('Student')
@@ -30,16 +31,6 @@ class Student(models.Model):
 
     def get_absolute_url(self):
         return reverse('student_detail', args=[str(self.id)])
-
-class Document(models.Model):
-    '''
-        A Student's document that can identify him or her.
-    '''
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    document = models.FileField(_('Document'), upload_to=documentPath)
-
-    class Meta:
-        verbose_name = _('Document')
 
 class Subject(models.Model):
     '''
