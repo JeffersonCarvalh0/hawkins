@@ -44,10 +44,25 @@
                     <i class="material-icons prefix"> class </i>
                 {% endif %}
 
-                {{ field.label_tag }}
+                {% if field.label == 'Document' %}
+                    <div class="file-field">
+                        <div class="btn">
+                            <span> {% trans "File" %} </span>
+                            {{ field }}
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input type="text" class="file-path validate">
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if file.label != "Document" %}
+                    {{ field.label_tag }}
+                {% endif %}
+
                 {% if field.label == 'Birth date' %}
                     {{ field|addcss:"datepicker" }}
-                {% else %}
+                {% elif field.label != 'Document'%}
                     {{ field }}
                 {% endif %}
             </div>

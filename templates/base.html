@@ -16,7 +16,8 @@
 </head>
 
 <body>
-    {# <nav>
+    {% comment %}
+    <nav>
         <div class="nav-wrapper indigo">
             <div class="col s12">
                 {% for element in request.session.breadcrumb %}
@@ -24,7 +25,8 @@
                 {% endfor %}
            </div>
         </div>
-    </nav>#}
+    </nav>
+    {% endcomment %}
 
     <div class="container">
         {% block body %}
