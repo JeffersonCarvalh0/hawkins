@@ -56,13 +56,13 @@
                     </div>
                 {% endif %}
 
-                {% if file.label != "Document" %}
+                {% if file.label != 'Document' %}
                     {{ field.label_tag }}
                 {% endif %}
 
                 {% if field.label == 'Birth date' %}
                     {{ field|addcss:"datepicker" }}
-                {% elif field.label != 'Document'%}
+                {% elif field.label != 'Document' %}
                     {{ field }}
                 {% endif %}
             </div>
