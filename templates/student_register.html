@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block body %}
+    <h4> {% trans "New student" %} </h4>
+    <h5> {% trans "Insert information about the student here." %} </h5>
+
+    <br>
+    {% if form.errors %}
+        {% trans "Please fix the following errors:" %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="card-panel red">
+                    <strong> {{ field.label }}: {{ field.errors|striptags }} </strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    <br>
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="input-field">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+        </div>
+
+        <div class="input-field">
+            {{ form.registry.label_tag }}
+            {{ form.registry }}
+        </div>
+
+        <div class="input-field">
+            {{ form.birth.label_tag }}
+            {{ form.birth }}
+        </div>
+
+        <div class="input-field">
+            {{ form.school_class.label_tag }}
+            {{ form.school_class }}
+        </div>
+
+        <br><br>
+        <button type="submit" class="waves-effect waves-light btn"> Send </button>
+        <a href="/" class="waves-effect waves-light btn grey"> Back </a>
+    </form>
+
+{% endblock %}

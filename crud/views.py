@@ -1,8 +1,12 @@
 from .models import Student
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views import View
 from django.views.generic import TemplateView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 
@@ -15,17 +19,32 @@ class Index(TemplateView):
         self.request.session['breadcrumb'] = [self.name,]
         return context
 
-def students_list(request):
-    return render(request, 'students_list.html', {})
+class StudentList(ListView):
+    template_name = 'student_list.html'
+    model = Student
+    queryset = Student.objects.all()
 
-def students_register(request):
-    return render(request, 'students_register.html', {})
+class StudentDetail(DetailView):
+    template_name = 'student_detail'
+    model = Student
 
-def students_detail(request):
-    return render(request, 'students_detail.html', {})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-def students_delete(request):
-    return render(request, 'students_delete.html', {})
+class StudentRegister(CreateView):
+    template_name_suffix = '_register'
+    model = Student
+    fields = '__all__'
+
+class StudentUpdate(UpdateView):
+    template_name_suffix = '_register'
+    model = Student
+    fields = '__all__'
+
+class StudentDelete(DeleteView):
+    template_name_suffix = '_delete'
+    model = Student
+    success_url = reverse_lazy('student_list')
 
 def classes_list(request):
     return render(request,'classes_list.html', {})
