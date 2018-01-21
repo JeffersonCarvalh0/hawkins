@@ -1,3 +1,5 @@
+anytree==2.4.3
 cefpython3==57.0
 Django==2.0
 pytz==2017.3
+six==1.11.0
