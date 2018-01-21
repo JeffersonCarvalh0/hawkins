@@ -11,21 +11,19 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # Create your views here.
 
 class Index(TemplateView):
-    template_name = 'index.html'
-    name = _('index')
+    template_name = 'crud/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        self.request.session['breadcrumb'] = [self.name,]
         return context
 
 class StudentList(ListView):
-    template_name = 'student_list.html'
+    template_name = 'crud/student_list.html'
     model = Student
     queryset = Student.objects.all()
 
 class StudentDetail(DetailView):
-    template_name = 'student_detail'
+    template_name = 'crud/student_detail'
     model = Student
 
     def get_context_data(self, **kwargs):
@@ -49,11 +47,14 @@ class StudentDelete(DeleteView):
 def classes_list(request):
     return render(request,'classes_list.html', {})
 
+def classes_detail(request):
+    return render(request, 'classes_detail.html', {})
+
 def classes_register(request):
     return render(request, 'classes_register.html', {})
 
-def classes_detail(request):
-    return render(request, 'classes_detail.html', {})
+def classes_update(request):
+    return render(request, 'classes_update', {})
 
 def classes_delete(request):
     return render(request, 'classes_delete.html', {})

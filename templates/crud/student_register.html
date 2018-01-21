@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crud_extras %}
+
+{% block body %}
+    <h4> {% trans "New student" %} </h4>
+    <h5> {% trans "Insert information about the student here." %} </h5>
+
+    <br>
+    {% if form.errors %}
+        {% trans "There are errors in your form. Please, correct them and try again." %}
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <div class="card-panel red">
+                        <strong> {{ error }} </strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="input-field">
+                {% if field.label == 'Full name' %}
+                    <i class="material-icons prefix"> account_circle </i>
+                {% endif %}
+
+                {% if field.label == 'Telephone number' %}
+                    <i class="material-icons prefix"> phone </i>
+                {% endif %}
+
+                {% if field.label == 'Registry' %}
+                    <i class="material-icons prefix"> local_offer </i>
+                {% endif %}
+
+                {% if field.label == 'Birth date' %}
+                    <i class="material-icons prefix"> child_care </i>
+                {% endif %}
+
+                {% if field.label == 'School class' %}
+                    <i class="material-icons prefix"> class </i>
+                {% endif %}
+
+                {{ field.label_tag }}
+                {% if field.label == 'Birth date' %}
+                    {{ field|addcss:"datepicker" }}
+                {% else %}
+                    {{ field }}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <br><br>
+        <div class="right-align">
+            <a href="/" class="waves-effect waves-light btn grey"> {% trans "Back" %} </a>
+            <button type="submit" class="waves-effect waves-light btn"> {% trans "Send" %} </button>
+        </div>
+    </form>
+    <br><br>
+
+    {% block script %}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+        </script>
+
+        <script type="text/javascript">
+            $('.datepicker').pickadate({
+                max: new Date(),
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 100, // Creates a dropdown of 15 years to control year,
+                today: 'Today',
+                clear: 'Clear',
+                close: 'Ok',
+                closeOnSelect: false // Close upon selecting a date,
+            });
+        </script>
+    {% endblock %}
+
+{% endblock %}

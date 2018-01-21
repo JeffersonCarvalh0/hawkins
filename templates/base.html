@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <nav>
+    {# <nav>
         <div class="nav-wrapper indigo">
             <div class="col s12">
                 {% for element in request.session.breadcrumb %}
@@ -24,7 +24,7 @@
                 {% endfor %}
            </div>
         </div>
-    </nav>
+    </nav>#}
 
     <div class="container">
         {% block body %}
@@ -33,5 +33,9 @@
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+
+    {% block script %}
+    {% endblock %}
+
 </body>
 </html>
