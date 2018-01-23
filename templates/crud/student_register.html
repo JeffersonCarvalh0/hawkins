@@ -7,8 +7,12 @@
     <h5> {% trans "Insert information about the student here." %} </h5>
 
     <br>
+
     {% if form.errors %}
+    <div class="card-panel red">
         {% trans "There are errors in your form. Please, correct them and try again." %}
+
+    </div>
     {% endif %}
 
     <form action="" method="post">
@@ -44,25 +48,25 @@
                     <i class="material-icons prefix"> class </i>
                 {% endif %}
 
-                {% if field.label == 'Document' %}
-                    <div class="file-field">
+                {% if field.label == 'ID Document' %}
+                    <div class="file-field input-field">
                         <div class="btn">
                             <span> {% trans "File" %} </span>
                             {{ field }}
                         </div>
                         <div class="file-path-wrapper">
-                            <input type="text" class="file-path validate">
+                            <input type="text" class="file-path validate" placeholder="{{ field.label }}">
                         </div>
                     </div>
                 {% endif %}
 
-                {% if file.label != 'Document' %}
+                {% if file.label != "ID Document" %}
                     {{ field.label_tag }}
                 {% endif %}
 
-                {% if field.label == 'Birth date' %}
+                {% if field.label == "Birth date" %}
                     {{ field|addcss:"datepicker" }}
-                {% elif field.label != 'Document' %}
+                {% elif field.label != "ID Document" %}
                     {{ field }}
                 {% endif %}
             </div>

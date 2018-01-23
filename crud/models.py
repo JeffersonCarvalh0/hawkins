@@ -21,7 +21,7 @@ class Student(models.Model):
     registry = models.CharField(_('Registry'), max_length=30)
     birth = models.DateField(_('Birth date'), null=True)
     school_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True)
-    document = models.FileField(_('Document'), upload_to=documentPath)
+    document = models.FileField(_('ID Document'), upload_to=documentPath)
 
     class Meta:
         verbose_name = _('Student')
