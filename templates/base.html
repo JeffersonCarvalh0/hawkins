@@ -16,17 +16,17 @@
 </head>
 
 <body>
-    {% comment %}
     <nav>
         <div class="nav-wrapper indigo">
             <div class="col s12">
-                {% for element in request.session.breadcrumb %}
-                    <a href="{% url element %}" class="breadcumb"> {{ element }} </a>
-                {% endfor %}
+                <div class="elements" style="margin-left: 10px;">
+                    {% for element in request.session.breadcrumb %}
+                        <a href="{% url element.name %}" class="breadcrumb"> {{ element.verbose_name }} </a>
+                    {% endfor %}
+                </div>
            </div>
         </div>
     </nav>
-    {% endcomment %}
 
     <div class="container">
         {% block body %}
