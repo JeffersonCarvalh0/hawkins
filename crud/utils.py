@@ -22,11 +22,3 @@ def getLanguageChoices():
         choices[i] = (LANGUAGES[1], LANGUAGES[0])
 
     return choices
-
-def breadcrumbUpdate(breadcrumb, new_value):
-    for i in range(len(breadcrumb)):
-        if breadcrumb[i]['name'] == new_value['name']:
-            breadcrumb = breadcrumb[:i + 1]
-            return breadcrumb
-    breadcrumb.append(new_value)
-    return breadcrumb
