@@ -12,6 +12,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 class BreadcrumbMixin(object):
     index = False
+    name = None
+    verbose_name = None
 
     def breadcrumbUpdate(self, breadcrumb, new_value):
         for i in range(len(breadcrumb)):

@@ -1,5 +1,37 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block body %}
-    <h1> Students list </h1>
+    <h4> {% trans "Student's list:" %} </h4>
+
+    <br>
+
+    <table class="responsive-table centered highlight">
+        <thead>
+            <th> {% trans "Name" %} </th>
+            <th> {% trans "Registry" %} </th>
+            <th> {% trans "Class" %} </th>
+        </thead>
+
+        <tbody>
+            {% for student in object_list %}
+                <div class="responsive-table centered highlight">
+                    <tr>
+                        <td> <a href="{% url student  %}"> {{ student.name }} </a> </td>
+                        <td> {{ student.registry }} </td>
+                        <td> {{ student.school_class }} </td>
+                    </tr>
+                </div>
+            {% empty %}
+                <tr>
+                    <td> {% trans "Empty list." %} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="right-align">
+        <a href="/" class="wave-effects waves-light btn grey"> {% trans "Back" %} </a>
+        <a href="{% url 'student_register' %}" class="wave-effects waves-light btn green"> {% trans "New" %} </a>
+    </div>
 {% endblock %}
