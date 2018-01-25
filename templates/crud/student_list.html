@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load crud_extras %}
 
 {% block body %}
     <h4> {% trans "Student's list:" %} </h4>
@@ -31,7 +32,7 @@
     </table>
 
     <div class="right-align">
-        <a href="/" class="wave-effects waves-light btn grey"> {% trans "Back" %} </a>
+        <a href="{% back %}" class="wave-effects waves-light btn grey"> {% trans "Back" %} </a>
         <a href="{% url 'student_register' %}" class="wave-effects waves-light btn green"> {% trans "New" %} </a>
     </div>
 {% endblock %}
