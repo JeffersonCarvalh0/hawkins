@@ -15,7 +15,7 @@
     <br><br>
     {% endif %}
 
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         {% for field in form %}
@@ -48,6 +48,7 @@
                     <i class="material-icons prefix"> class </i>
                 {% endif %}
 
+                {% comment %}
                 {% if field.label == 'ID Document' %}
                     <div class="file-field input-field">
                         <div class="btn">
@@ -59,14 +60,16 @@
                         </div>
                     </div>
                 {% endif %}
+                {% endcomment %}
 
-                {% if field.label != "ID Document" %}
+                {# {% if field.label != "ID Document" %}#}
                     {{ field.label_tag }}
-                {% endif %}
+                {# {% endif %}#}
 
                 {% if field.label == "Birth date" %}
                     {{ field|addcss:"datepicker" }}
-                {% elif field.label != "ID Document" %}
+                {# {% elif field.label != "ID Document" %}#}
+                {% else %}
                     {{ field }}
                 {% endif %}
             </div>

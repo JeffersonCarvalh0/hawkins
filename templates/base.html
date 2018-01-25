@@ -21,7 +21,12 @@
             <div class="col s12">
                 <div class="elements" style="margin-left: 10px;">
                     {% for element in request.session.breadcrumb %}
-                        <a href="{% url element.name %}" class="breadcrumb"> {{ element.verbose_name }} </a>
+                        {{ element.arg }}
+                        {% if element.arg %}
+                            <a href="{% url element.name element.arg %}" class="breadcrumb"> {{ element.verbose_name }} </a>
+                        {% else %}
+                            <a href="{% url element.name %}" class="breadcrumb"> {{ element.verbose_name }} </a>
+                        {% endif %}
                     {% endfor %}
                 </div>
            </div>

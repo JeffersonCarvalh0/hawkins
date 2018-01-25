@@ -7,7 +7,7 @@ def documentPath(instance, filename):
         Function used to save student's documents in a path with his or her
         registry.
     '''
-    return '%s/%s' %(instance.student.registry, filename)
+    return '%s/%s' %(instance.registry, filename)
 
 def getLanguageChoices():
     '''

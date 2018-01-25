@@ -23,9 +23,13 @@ class BreadcrumbMixin(object):
         breadcrumb.append(new_value)
         return breadcrumb
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
+
         new_value = {'name' : self.name, 'verbose_name' : self.verbose_name}
+        if len(args):
+            new_value['arg'] = args[0]
+
         if self.index:
             self.request.session['breadcrumb'] = [new_value,]
         else:
@@ -49,6 +53,7 @@ class StudentDetail(BreadcrumbMixin, DetailView):
     template_name = 'crud/student_detail.html'
     model = Student
     slug_field = 'registry'
+    slug_url_kwarg = 'registry'
     name = 'student_detail'
     verbose_name = _('View student')
 

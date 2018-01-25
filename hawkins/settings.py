@@ -147,3 +147,5 @@ STATICFILES_DIRS = (
 # Media Files
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'documents')
+
+MEDIA_URL = '/media/'
