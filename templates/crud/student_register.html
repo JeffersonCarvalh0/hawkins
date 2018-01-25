@@ -80,24 +80,24 @@
     </form>
     <br><br>
 
-    {% block script %}
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('select').material_select();
-            });
-        </script>
+{% endblock %}
 
-        <script type="text/javascript">
-            $('.datepicker').pickadate({
-                max: new Date(),
-                selectMonths: true, // Creates a dropdown to control month
-                selectYears: 100, // Creates a dropdown of 15 years to control year,
-                today: 'Today',
-                clear: 'Clear',
-                close: 'Ok',
-                closeOnSelect: false // Close upon selecting a date,
-            });
-        </script>
-    {% endblock %}
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
 
+    <script type="text/javascript">
+        $('.datepicker').pickadate({
+            max: new Date(),
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 100, // Creates a dropdown of 15 years to control year,
+            today: 'Today',
+            clear: 'Clear',
+            close: 'Ok',
+            closeOnSelect: false // Close upon selecting a date,
+        });
+    </script>
 {% endblock %}
