@@ -18,7 +18,7 @@ class Student(models.Model):
     '''
     name = models.CharField(_('Full name'), max_length=255)
     phone = models.CharField(_('Telephone number'), max_length=11)
-    registry = models.CharField(_('Registry'), max_length=30)
+    registry = models.CharField(_('Registry'), max_length=30, unique=True)
     birth = models.DateField(_('Birth date'), null=True)
     school_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True)
     document = models.FileField(_('ID Document'), upload_to=documentPath)
@@ -30,7 +30,7 @@ class Student(models.Model):
         return '%s, %s' %(self.name, self.registry)
 
     def get_absolute_url(self):
-        return reverse('student_detail', args=[str(self.id)])
+        return reverse('student_detail', args=[str(self.registry)])
 
 class Subject(models.Model):
     '''
