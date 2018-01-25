@@ -11,8 +11,8 @@
     {% if form.errors %}
     <div class="card-panel red">
         {% trans "There are errors in your form. Please, correct them and try again." %}
-
     </div>
+    <br><br>
     {% endif %}
 
     <form action="" method="post">
@@ -21,8 +21,8 @@
         {% for field in form %}
             {% if field.errors %}
                 {% for error in field.errors %}
-                    <div class="card-panel red">
-                        <strong> {{ error }} </strong>
+                    <div>
+                        <span class="red-text"> {{ error }} </span>
                     </div>
                 {% endfor %}
             {% endif %}
@@ -60,7 +60,7 @@
                     </div>
                 {% endif %}
 
-                {% if file.label != "ID Document" %}
+                {% if field.label != "ID Document" %}
                     {{ field.label_tag }}
                 {% endif %}
 
@@ -97,7 +97,8 @@
             today: 'Today',
             clear: 'Clear',
             close: 'Ok',
-            closeOnSelect: false // Close upon selecting a date,
+            closeOnSelect: false, // Close upon selecting a date,
+            format: 'mm/dd/yy'
         });
     </script>
 {% endblock %}
