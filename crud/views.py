@@ -46,7 +46,7 @@ class StudentList(BreadcrumbMixin, ListView):
     verbose_name = _("Students")
 
 class StudentDetail(BreadcrumbMixin, DetailView):
-    template_name = 'crud/student_detail'
+    template_name = 'crud/student_detail.html'
     model = Student
     slug_field = 'registry'
     name = 'student_detail'
@@ -73,20 +73,39 @@ class StudentDelete(BreadcrumbMixin, DeleteView):
     name = 'student_delete'
     verbose_name = _('Delete student')
 
-def classes_list(request):
-    return render(request,'classes_list.html', {})
+class ClassList(BreadcrumbMixin, ListView):
+    template_name = 'crud/class_list.html'
+    model = Class
+    queryset = Class.objects.all()
+    name = 'class_list'
+    verbose_name = _('Classes')
 
-def classes_detail(request):
-    return render(request, 'classes_detail.html', {})
+class ClassDetail(BreadcrumbMixin, DetailView):
+    template_name = 'crud/class_detail.html'
+    model = Class
+    name = 'class_detail'
+    verbose_name = _('View class')
 
-def classes_register(request):
-    return render(request, 'classes_register.html', {})
+class ClassRegister(BreadcrumbMixin, CreateView):
+    template_name_suffix = '_register'
+    model = Class
+    fields = '__all__'
+    name = 'class_register'
+    verbose_name = _('Register new class')
 
-def classes_update(request):
-    return render(request, 'classes_update', {})
+class ClassUpdate(BreadcrumbMixin, UpdateView):
+    template_name_suffix = '_register'
+    model = Class
+    fields = '__all__'
+    name = 'class_update'
+    verbose_name = _('Update class')
 
-def classes_delete(request):
-    return render(request, 'classes_delete.html', {})
+class ClassDelete(BreadcrumbMixin, DeleteView):
+    template_name_suffix = '_delete'
+    model = Class
+    success_url = reverse_lazy('class_list')
+    name = 'class_delete'
+    verbose_name = _('Delete class')
 
 def settings(request):
     return render(request, 'settings.html', {})
