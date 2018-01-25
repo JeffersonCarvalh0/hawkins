@@ -1,4 +1,4 @@
-from .models import Student
+from .models import Student, Class
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
