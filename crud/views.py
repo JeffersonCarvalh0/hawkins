@@ -35,41 +35,41 @@ class BreadcrumbMixin(object):
 class Index(BreadcrumbMixin, TemplateView):
     template_name = 'crud/index.html'
     index = True
-    name = _('index')
+    name = 'index'
     verbose_name = _('Index')
 
 class StudentList(BreadcrumbMixin, ListView):
     template_name = 'crud/student_list.html'
     model = Student
     queryset = Student.objects.all()
-    name = _('student_list')
+    name = 'student_list'
     verbose_name = _("Students")
 
 class StudentDetail(BreadcrumbMixin, DetailView):
     template_name = 'crud/student_detail'
     model = Student
-    name = _('student_detail')
+    name = 'student_detail'
     verbose_name = _('View student')
 
 class StudentRegister(BreadcrumbMixin, CreateView):
     template_name_suffix = '_register'
     model = Student
     fields = '__all__'
-    name = _('student_register')
+    name = 'student_register'
     verbose_name = _('Register new student')
 
 class StudentUpdate(BreadcrumbMixin, UpdateView):
     template_name_suffix = '_register'
     model = Student
     fields = '__all__'
-    name = _('student_update')
+    name = 'student_update'
     verbose_name = _('Update student')
 
 class StudentDelete(BreadcrumbMixin, DeleteView):
     template_name_suffix = '_delete'
     model = Student
     success_url = reverse_lazy('student_list')
-    name = _('student_delete')
+    name = 'student_delete'
     verbose_name = _('Delete student')
 
 def classes_list(request):
