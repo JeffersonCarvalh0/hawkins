@@ -18,7 +18,7 @@ class Student(models.Model):
     '''
     name = models.CharField(_('Full name'), max_length=255)
     phone = models.CharField(_('Telephone number'), max_length=11)
-    registry = models.CharField(_('Registry'), max_length=30, unique=True)
+    registry = models.SlugField(_('Registry'), max_length=30)
     birth = models.DateField(_('Birth date'), null=True)
     school_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True)
     document = models.FileField(_('ID Document'), upload_to=documentPath)

@@ -27,7 +27,7 @@
             {% for student in object_list %}
                 <div class="responsive-table centered highlight">
                     <tr>
-                        <td> <a href="{% url student  %}"> {{ student.name }} </a> </td>
+                        <td> <a href="{% url student.get_absolute_url  %}"> {{ student.name }} </a> </td>
                         <td> {{ student.registry }} </td>
                         <td> {{ student.school_class }} </td>
                     </tr>
