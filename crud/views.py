@@ -48,6 +48,7 @@ class StudentList(BreadcrumbMixin, ListView):
 class StudentDetail(BreadcrumbMixin, DetailView):
     template_name = 'crud/student_detail'
     model = Student
+    slug_field = 'registry'
     name = 'student_detail'
     verbose_name = _('View student')
 
