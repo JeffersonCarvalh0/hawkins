@@ -18,9 +18,7 @@ class BreadcrumbMixin(object):
         for i in range(len(breadcrumb)):
             if breadcrumb[i]['url_name'] == new_value['url_name']:
                 breadcrumb = breadcrumb[:i + 1]
-                return breadcrumb
         breadcrumb.append(new_value)
-        return breadcrumb
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -34,7 +32,7 @@ class BreadcrumbMixin(object):
         if self.index:
             self.request.session['breadcrumb'] = [new_value,]
         else:
-            self.request.session['breadcrumb'] = self.breadcrumbUpdate(self.request.session['breadcrumb'], new_value)
+            self.breadcrumbUpdate(self.request.session['breadcrumb'], new_value)
         return context
 
 class Index(BreadcrumbMixin, TemplateView):

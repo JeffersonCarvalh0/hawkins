@@ -1,6 +1,4 @@
 {% load static %}
-{% load i18n %}
-{% load l10n %}
 
 <!DOCTYPE html>
 <html>
@@ -19,9 +17,9 @@
     <nav>
         <div class="nav-wrapper indigo">
             <div class="col s12">
-                <div class="elements" style="margin-left: 10px;">
+                <div style="margin-left: 10px;">
                     {% for element in request.session.breadcrumb %}
-                            <a href="{{ element.url }}" class="breadcrumb"> {{ element.verbose_name }} </a>
+                        <a href="{{ element.url }}" class="breadcrumb"> {{ element.verbose_name }} </a>
                     {% endfor %}
                 </div>
            </div>
