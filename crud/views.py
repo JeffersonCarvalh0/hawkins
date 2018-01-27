@@ -1,6 +1,6 @@
 from .models import Student, Class
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
@@ -26,7 +26,7 @@ class BreadcrumbMixin(object):
         new_value = {
             'url_name' : self.url_name,
             'verbose_name' : self.verbose_name,
-            'url' : reverse_lazy(self.url_name, **kwargs)
+            'url' : reverse(self.url_name, **kwargs)
         }
 
         if self.index:
