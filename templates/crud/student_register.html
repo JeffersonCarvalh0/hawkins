@@ -48,7 +48,6 @@
                     <i class="material-icons prefix"> class </i>
                 {% endif %}
 
-                {% comment %}
                 {% if field.label == 'ID Document' %}
                     <div class="file-field input-field">
                         <div class="btn">
@@ -60,16 +59,14 @@
                         </div>
                     </div>
                 {% endif %}
-                {% endcomment %}
 
-                {# {% if field.label != "ID Document" %}#}
-                    {# {{ field.label_tag }}#}
-                {# {% endif %}#}
+                {% if field.label != "ID Document" %}
+                    {{ field.label_tag }}
+                {% endif %}
 
                 {% if field.label == "Birth date" %}
                     {{ field|addcss:"datepicker" }}
-                {# {% elif field.label != "ID Document" %}#}
-                {% else %}
+                {% elif field.label != "ID Document" %}
                     {{ field }}
                 {% endif %}
             </div>
