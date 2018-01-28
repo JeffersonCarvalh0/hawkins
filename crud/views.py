@@ -26,8 +26,12 @@ class BreadcrumbMixin(object):
         new_value = {
             'url_name' : self.url_name,
             'verbose_name' : self.verbose_name,
-            'url' : reverse(self.url_name, **kwargs)
         }
+
+        if kwargs.get('object'):
+            new_value['url'] = kwargs['object'].get_absolute_url()
+        else:
+            new_value['url'] = reverse(self.url_name)
 
         if self.index:
             self.request.session['breadcrumb'] = [new_value,]
