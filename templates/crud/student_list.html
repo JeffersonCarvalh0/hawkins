@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <table class="responsive-table centered highlight">
+    <table class="responsive-table centered highlight" id="table">
         <thead>
             <th> {% trans "Name" %} </th>
             <th> {% trans "Registry" %} </th>
@@ -48,20 +48,17 @@
 
 {% block script %}
     <script type="text/javascript">
-        $(function() {
-            var $cells = $("td");
+        var $rows = $('#table tbody tr');
+        $('#search_field').keyup(function() {
 
-            $("#search").keyup(function() {
-                var val = $.trim(this.value).toUpperCase();
-                if (val === "")
-                    $cells.parent().show();
-                else {
-                    $cells.parent().hide();
-                    $cells.filter(function() {
-                        return -1 != $(this).text().toUpperCase().indexOf(val);
-                    }).parent().show();
-                }
-            });
-        });​
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+
+            $rows.show().filter(function() {
+                text = $(this).text().replace(/\s+/g, ' ');
+                return !reg.test(text);
+            }).hide();
+        });
     </script>
 {% endblock %}
