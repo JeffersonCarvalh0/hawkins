@@ -40,7 +40,6 @@ class Subject(models.Model):
     '''
     name = models.CharField(_('Name'), max_length=255)
     school_class = models.ForeignKey('Class', on_delete=models.CASCADE)
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
 
     class Meta:
         # Translators: School's subject
@@ -54,8 +53,11 @@ class Grade(models.Model):
         A Student's grade of some subject.
     '''
     grade = models.FloatField(_('Grade'))
-    subject = models.ForeignKey('Subject', on_delete=models.CASCADE)
+    order = models.SmallIntegerField(_('Order'))
     retake = models.BooleanField(_('Retake'), default=False)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    subject = models.ForeignKey('Subject', on_delete=models.PROTECT)
+    school_class = models.ForeignKey('Class', on_delete=models.PROTECT)
 
     class Meta:
         verbose_name = _('Grade')
