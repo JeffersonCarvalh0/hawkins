@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load crud_extras %}
 
 {% block body %}
-    Info from student {{ object.name }}
+    {{ object.as_p }}
 {% endblock %}

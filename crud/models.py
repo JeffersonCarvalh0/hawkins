@@ -18,7 +18,7 @@ class Student(models.Model):
     '''
     name = models.CharField(_('Full name'), max_length=255)
     phone = models.CharField(_('Telephone number'), max_length=11)
-    registry = models.SlugField(_('Registry'), max_length=30, unique=True)
+    registry = models.SlugField(_('Registry'), max_length=30, unique=True, primary_key=True)
     birth = models.DateField(_('Birth date'), null=True)
     school_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True)
     document = models.FileField(_('ID Document'), upload_to=documentPath)
@@ -55,7 +55,7 @@ class Grade(models.Model):
     grade = models.FloatField(_('Grade'))
     order = models.SmallIntegerField(_('Order'))
     retake = models.BooleanField(_('Retake'), default=False)
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='grades')
     subject = models.ForeignKey('Subject', on_delete=models.PROTECT)
     school_class = models.ForeignKey('Class', on_delete=models.PROTECT)
 

@@ -18,7 +18,9 @@ class BreadcrumbMixin(object):
         for i in range(len(breadcrumb)):
             if breadcrumb[i]['url_name'] == new_value['url_name']:
                 breadcrumb = breadcrumb[:i + 1]
+                break
         breadcrumb.append(new_value)
+        return breadcrumb
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -36,7 +38,7 @@ class BreadcrumbMixin(object):
         if self.index:
             self.request.session['breadcrumb'] = [new_value,]
         else:
-            self.breadcrumbUpdate(self.request.session['breadcrumb'], new_value)
+            self.request.session['breadcrumb'] = self.breadcrumbUpdate(self.request.session['breadcrumb'], new_value)
         return context
 
 class Index(BreadcrumbMixin, TemplateView):
@@ -54,11 +56,13 @@ class StudentList(BreadcrumbMixin, ListView):
 
 class StudentDetail(BreadcrumbMixin, DetailView):
     template_name = 'crud/student_detail.html'
-    model = Student
     slug_field = 'registry'
     slug_url_kwarg = 'pk'
     url_name = 'student_detail'
     verbose_name = _('View student')
+
+    def get_queryset(self):
+        return Student.objects.prefetch_related('grades').filter(pk=self.kwargs.get('pk'))
 
 class StudentRegister(BreadcrumbMixin, CreateView):
     template_name_suffix = '_register'
