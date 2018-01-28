@@ -17,7 +17,7 @@ class BreadcrumbMixin(object):
     def breadcrumbUpdate(self, breadcrumb, new_value):
         for i in range(len(breadcrumb)):
             if breadcrumb[i]['url_name'] == new_value['url_name']:
-                breadcrumb = breadcrumb[:i + 1]
+                breadcrumb = breadcrumb[:i]
                 break
         breadcrumb.append(new_value)
         return breadcrumb
