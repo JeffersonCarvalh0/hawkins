@@ -50,7 +50,7 @@ def main():
         }
     )
 
-    browser = cef.CreateBrowserSync(url='localhost:8000', window_title='Hawkings',)
+    browser = cef.CreateBrowserSync(url='localhost:8000', window_title='Hawkins',)
     browser.SetClientHandler(LoadHandler())
     cef.MessageLoop()
     cef.Shutdown()
