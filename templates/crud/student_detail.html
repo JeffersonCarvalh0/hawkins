@@ -92,7 +92,13 @@
     <h2> {% trans "Grades:" %} </h2>
 
     <ul class="tabs">
+        {% if grades.exists %}
 
+        {% else %}
+            <div class="col s12">
+                {% trans "Nothing to show." %}
+            </div>
+        {% endif %}
     </ul>
 
     <br><br>

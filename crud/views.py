@@ -1,4 +1,5 @@
 from .models import Student, Class, Grade
+from .utils import cleanGrades
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
@@ -61,15 +62,17 @@ class StudentList(BreadcrumbMixin, ListView):
 
 class StudentDetail(BreadcrumbMixin, DetailView):
     template_name = 'crud/student_detail.html'
-    model = Student
     slug_field = 'registry'
     slug_url_kwarg = 'pk'
     url_name = 'student_detail'
     verbose_name = _('View student')
 
+    def get_queryset(self):
+        return Student.objects.prefetch_related('grades').filter(pk=self.kwargs['pk'])
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['grades'] = Grade.objects.filter(pk=kwargs.get('pk'))
+        context['grades'] = cleanGrades(context['object'].grades)
         return context
 
 class StudentRegister(BreadcrumbMixin, CreateView):

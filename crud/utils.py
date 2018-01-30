@@ -22,3 +22,7 @@ def getLanguageChoices():
         choices[i] = (LANGUAGES[1], LANGUAGES[0])
 
     return choices
+
+def cleanGrades(grades):
+    print(grades)
+    return grades
