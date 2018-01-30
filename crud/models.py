@@ -20,7 +20,7 @@ class Student(models.Model):
     phone = models.CharField(_('Telephone number'), max_length=11)
     registry = models.SlugField(_('Registry'), max_length=30, unique=True, primary_key=True)
     birth = models.DateField(_('Birth date'), null=True)
-    school_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True)
+    school_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True, verbose_name=_('Class'))
     document = models.FileField(_('ID Document'), upload_to=documentPath)
 
     class Meta:
@@ -61,7 +61,6 @@ class Grade(models.Model):
 
     class Meta:
         verbose_name = _('Grade')
-        ordering = ['order']
 
     def __str__(self):
         return '%s, %s, %.2f' %(self.subject.student, self.subject.name, self.grade)

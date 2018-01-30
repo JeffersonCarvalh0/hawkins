@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <table class="responsive-table centered highlight" id="table">
+    <table class="responsive-table centered highlight z-depth-1" id="table">
         <thead>
             <th> {% trans "Name" %} </th>
             <th> {% trans "Registry" %} </th>
@@ -40,10 +40,13 @@
         </tbody>
     </table>
 
-    <div class="right-align">
-        <a href="{% back %}" class="wave-effects waves-light btn grey"> {% trans "Back" %} </a>
-        <a href="{% url 'student_register' %}" class="wave-effects waves-light btn green"> {% trans "New" %} </a>
-    </div>
+    <br><br>
+
+        <div class="right-align">
+            <a href="{% back %}" class="wave-effects waves-light btn grey"> <i class="material-icons left"> chevron_left </i> {% trans "Back" %} </a>
+            <a href="{% url 'student_register' %}" class="wave-effects waves-light btn green"> <i class="material-icons right"> add_box </i> {% trans "New" %} </a>
+        </div>
+
 {% endblock %}
 
 {% block script %}

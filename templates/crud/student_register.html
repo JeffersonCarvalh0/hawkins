@@ -44,7 +44,7 @@
                     <i class="material-icons prefix"> child_care </i>
                 {% endif %}
 
-                {% if field.label == 'School class' %}
+                {% if field.label == 'Class' %}
                     <i class="material-icons prefix"> class </i>
                 {% endif %}
 
@@ -74,8 +74,8 @@
 
         <br><br>
         <div class="right-align">
-            <a href="{% back %}" class="waves-effect waves-light btn grey"> {% trans "Back" %} </a>
-            <button type="submit" class="waves-effect waves-light btn" value="Submit"> {% trans "Send" %} </button>
+            <a href="{% back %}" class="waves-effect waves-light btn grey"> <i class="material-icons left"> chevron_left </i> {% trans "Back" %} </a>
+            <button type="submit" class="waves-effect waves-light btn" value="Submit"> <i class="material-icons right"> save </i> {% trans "Save" %} </button>
         </div>
     </form>
     <br><br>

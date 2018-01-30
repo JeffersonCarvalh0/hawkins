@@ -1,4 +1,4 @@
-from .models import Student, Class
+from .models import Student, Class, Grade
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
@@ -30,8 +30,13 @@ class BreadcrumbMixin(object):
             'verbose_name' : self.verbose_name,
         }
 
-        if kwargs.get('object'):
-            new_value['url'] = kwargs['object'].get_absolute_url()
+        if kwargs.get('object') is not None:
+            obj = kwargs['object']
+        else:
+            obj = context.get('object')
+
+        if obj is not None:
+            new_value['url'] = obj.get_absolute_url()
         else:
             new_value['url'] = reverse(self.url_name)
 
@@ -56,13 +61,16 @@ class StudentList(BreadcrumbMixin, ListView):
 
 class StudentDetail(BreadcrumbMixin, DetailView):
     template_name = 'crud/student_detail.html'
+    model = Student
     slug_field = 'registry'
     slug_url_kwarg = 'pk'
     url_name = 'student_detail'
     verbose_name = _('View student')
 
-    def get_queryset(self):
-        return Student.objects.prefetch_related('grades').filter(pk=self.kwargs.get('pk'))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['grades'] = Grade.objects.filter(pk=kwargs.get('pk'))
+        return context
 
 class StudentRegister(BreadcrumbMixin, CreateView):
     template_name_suffix = '_register'

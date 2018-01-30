@@ -13,3 +13,7 @@ def back(context):
     prev_url = session['breadcrumb'][-2]['url']
 
     return prev_url
+
+@register.filter
+def verbose_name(model, field):
+    return model._meta.get_field(field).verbose_name
