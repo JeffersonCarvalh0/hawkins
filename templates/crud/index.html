@@ -9,7 +9,7 @@
 
     <ul class="collapsible" data-collapsible="accordion">
         <li>
-            <div class="collapsible-header"><i class="material-icons">person</i>{% trans "Manage Students" %}</div>
+            <div class="collapsible-header"><i class="material-icons"> person </i>{% trans "Manage students" %}</div>
             <div class="collapsible-body">
                 <span>
                     <a href="{% url 'student_register' %}"> {% trans "Register new student" %} </a>
@@ -23,7 +23,7 @@
         </li>
 
         <li>
-            <div class="collapsible-header"><i class="material-icons">class</i>{% trans "Manage classes" %}</div>
+            <div class="collapsible-header"><i class="material-icons"> class </i>{% trans "Manage classes" %}</div>
             <div class="collapsible-body">
                 <span>
                     <a href="{% url 'class_register' %}"> {% trans "Register new class" %} </a>
@@ -35,6 +35,23 @@
                 </span>
             </div>
         </li>
+
+        {% comment %}
+        <li>
+            <div class="collapsible-header"><i class="material-icons"> school </i>{% trans "Manage subjects" %}</div>
+            <div class="collapsible-body">
+                <span>
+                    <a href="{% url 'subject_register' %}"> {% trans "Register new subject" %} </a>
+                </span>
+            </div>
+            <div class="collapsible-body">
+                <span>
+                    <a href="{% url 'subject_list' %}"> {% trans "Search for subject" %} </a>
+                </span>
+            </div>
+        </li>
+        {% endcomment %}
+
 
         <li>
             <div class="collapsible-header"><i class="material-icons">list</i>{% trans "Other options" %}</div>

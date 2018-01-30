@@ -71,19 +71,16 @@ class StudentDetail(BreadcrumbMixin, DetailView):
         return context
 
 class StudentRegister(BreadcrumbMixin, CreateView):
-    template_name_suffix = '_register'
     model = Student
     fields = '__all__'
     verbose_name = _('Register new student')
 
 class StudentUpdate(BreadcrumbMixin, UpdateView):
-    template_name_suffix = '_register'
     model = Student
     fields = '__all__'
     verbose_name = _('Update student')
 
 class StudentDelete(BreadcrumbMixin, DeleteView):
-    template_name_suffix = '_delete'
     model = Student
     success_url = reverse_lazy('student_list')
     verbose_name = _('Delete student')
@@ -100,30 +97,44 @@ class ClassDetail(BreadcrumbMixin, DetailView):
     verbose_name = _('View class')
 
 class ClassRegister(BreadcrumbMixin, CreateView):
-    template_name_suffix = '_register'
     model = Class
     fields = '__all__'
     verbose_name = _('Register new class')
 
 class ClassUpdate(BreadcrumbMixin, UpdateView):
-    template_name_suffix = '_register'
     model = Class
     fields = '__all__'
     verbose_name = _('Update class')
 
 class ClassDelete(BreadcrumbMixin, DeleteView):
-    template_name_suffix = '_delete'
     model = Class
     success_url = reverse_lazy('class_list')
     verbose_name = _('Delete class')
 
-# class SubjectList(BreadcrumbMixin, ListView):
-#     template_name = 'crud/subject_list.html'
-#     model = Subject
-#     url_name = 'subject_list'
-#     verbose_name = _('Subjects')
-#
-# class SubjectDetail()
+class SubjectList(BreadcrumbMixin, ListView):
+    template_name = 'crud/subject_list.html'
+    model = Subject
+    verbose_name = _('Subjects')
+
+class SubjectDetail(BreadcrumbMixin, DetailView):
+    template_name = 'crud/subject_detail.html'
+    model = Subject
+    verbose_name = _('View subject')
+
+class SubjectRegister(BreadcrumbMixin, CreateView):
+    model = Subject
+    fields = '__all__'
+    verbose_name = _('Register new subject')
+
+class SubjectUpdate(BreadcrumbMixin, UpdateView):
+    model = Subject
+    fields = '__all__'
+    verbose_name = _('Update subject')
+
+class SubjectDelete(BreadcrumbMixin, DeleteView)
+    model = Subject
+    success_url = reverse_lazy('subject_list')
+    verbose_name = _('Delete subject')
 
 def settings(request):
     return render(request, 'settings.html', {})
