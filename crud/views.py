@@ -1,4 +1,4 @@
-from .models import Student, Class, Grade
+from .models import Student, Class, Subject
 from .utils import cleanGrades
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
@@ -131,7 +131,7 @@ class SubjectUpdate(BreadcrumbMixin, UpdateView):
     fields = '__all__'
     verbose_name = _('Update subject')
 
-class SubjectDelete(BreadcrumbMixin, DeleteView)
+class SubjectDelete(BreadcrumbMixin, DeleteView):
     model = Subject
     success_url = reverse_lazy('subject_list')
     verbose_name = _('Delete subject')
