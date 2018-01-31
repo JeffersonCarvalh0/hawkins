@@ -24,6 +24,7 @@ The  application starts by running the *run.py* file.
 * [SQLite3](https://www.sqlite.org/) - DBMS
 * [CEF Python](https://github.com/cztomczak/cefpython) - Desktop GUI
 * [Materialize](http://materializecss.com/) - Front-end framework
+* [django-cleanup](https://github.com/un1t/django-cleanup) - Automatically deletes model files
 
 # License
 
