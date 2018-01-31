@@ -17,7 +17,21 @@
     </div>
 
     <table class="responsive-table centered highlight z-depth-1" id="table">
-        {% block table %} {% endblock %}
+        {% block table %}
+            <thead>
+                {% block thead %} {% endblock %}
+            </thead>
+
+            <tbody>
+                {% for element in object_list %}
+                    <div class="responsive-table centered highlight">
+                        <tr>
+                            {% block tr %} {% endblock %}
+                        </tr>
+                    </div>
+                {% endfor %}
+            </tbody>
+        {% endblock %}
     </table>
 
     <br><br>
