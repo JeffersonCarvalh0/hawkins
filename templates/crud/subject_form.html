@@ -1,5 +1,21 @@
-{% extends "base.html" %}
+{% extends "form_base.html" %}
+{% load i18n %}
 
-{% block body %}
-    <h4> Subject register </h4>
+{% block header %} {% trans "Register new subject" %} {% endblock %}
+{% block sub_header %} {% trans "Insert information about the new subject here." %} {% endblock %}
+
+{% block inputs %}
+    {% if field.label == 'Name' %}
+        <i class="material-icons prefix"> school </i>
+    {% endif %}
+
+    {% if field.label == 'Class' %}
+        <i class="material-icons prefix"> class </i>
+    {% endif %}
+
+    {% if field.label != 'Class' %}
+        {{ field.label_tag }}
+    {% endif %}
+
+    {{ field }}
 {% endblock %}

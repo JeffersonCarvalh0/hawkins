@@ -29,6 +29,10 @@
                             {% block tr %} {% endblock %}
                         </tr>
                     </div>
+                {% empty %}
+                    <tr>
+                        <td> {% trans "Empty list." %} </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         {% endblock %}
