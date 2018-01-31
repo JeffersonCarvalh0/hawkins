@@ -1,104 +1,50 @@
-{% extends "base.html" %}
+{% extends "form_base.html" %}
 {% load i18n %}
 {% load crud_extras %}
 
-{% block body %}
-    <h4> {% trans "New student" %} </h4>
-    <h5> {% trans "Insert information about the student here." %} </h5>
+{% block header %} {% trans "New student" %} {% endblock %}
+{% block sub_header %} {% trans "Insert information about the student here." %} {% endblock %}
 
-    <br>
+{% block inputs %}
+        {% if field.label == 'Full name' %}
+            <i class="material-icons prefix"> account_circle </i>
+        {% endif %}
 
-    {% if form.errors %}
-    <div class="card-panel red">
-        {% trans "There are errors in your form. Please, correct them and try again." %}
-    </div>
-    <br><br>
-    {% endif %}
+        {% if field.label == 'Telephone number' %}
+            <i class="material-icons prefix"> phone </i>
+        {% endif %}
 
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+        {% if field.label == 'Registry' %}
+            <i class="material-icons prefix"> local_offer </i>
+        {% endif %}
 
-        {% for field in form %}
-            {% if field.errors %}
-                {% for error in field.errors %}
-                    <div>
-                        <span class="red-text"> {{ error }} </span>
-                    </div>
-                {% endfor %}
-            {% endif %}
+        {% if field.label == 'Birth date' %}
+            <i class="material-icons prefix"> child_care </i>
+        {% endif %}
 
-            <div class="input-field">
-                {% if field.label == 'Full name' %}
-                    <i class="material-icons prefix"> account_circle </i>
-                {% endif %}
+        {% if field.label == 'Class' %}
+            <i class="material-icons prefix"> class </i>
+        {% endif %}
 
-                {% if field.label == 'Telephone number' %}
-                    <i class="material-icons prefix"> phone </i>
-                {% endif %}
-
-                {% if field.label == 'Registry' %}
-                    <i class="material-icons prefix"> local_offer </i>
-                {% endif %}
-
-                {% if field.label == 'Birth date' %}
-                    <i class="material-icons prefix"> child_care </i>
-                {% endif %}
-
-                {% if field.label == 'Class' %}
-                    <i class="material-icons prefix"> class </i>
-                {% endif %}
-
-                {% if field.label == 'ID Document' %}
-                    <div class="file-field input-field">
-                        <div class="btn">
-                            <span> {% trans "File" %} </span>
-                            {{ field }}
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input type="text" class="file-path validate" placeholder="{{ field.label }}">
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if field.label != "ID Document" and field.label != 'School class' %}
-                    {{ field.label_tag }}
-                {% endif %}
-
-                {% if field.label == "Birth date" %}
-                    {{ field|addcss:"datepicker" }}
-                {% elif field.label != "ID Document" %}
+        {% if field.label == 'ID Document' %}
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span> {% trans "File" %} </span>
                     {{ field }}
-                {% endif %}
+                </div>
+                <div class="file-path-wrapper">
+                    <input type="text" class="file-path validate" placeholder="{{ field.label }}">
+                </div>
             </div>
-        {% endfor %}
+        {% endif %}
 
-        <br><br>
-        <div class="right-align">
-            <a href="{% back %}" class="waves-effect waves-light btn grey"> <i class="material-icons left"> chevron_left </i> {% trans "Back" %} </a>
-            <button type="submit" class="waves-effect waves-light btn" value="Submit"> <i class="material-icons right"> save </i> {% trans "Save" %} </button>
-        </div>
-    </form>
-    <br><br>
+        {% if field.label != "ID Document" and field.label != 'School class' %}
+            {{ field.label_tag }}
+        {% endif %}
 
-{% endblock %}
-
-{% block script %}
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('select').material_select();
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('.datepicker').pickadate({
-            max: new Date(),
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 100, // Creates a dropdown of 15 years to control year,
-            today: 'Today',
-            clear: 'Clear',
-            close: 'Ok',
-            closeOnSelect: false, // Close upon selecting a date,
-            format: 'mm/dd/yy'
-        });
-    </script>
+        {% if field.label == "Birth date" %}
+            {{ field|addcss:"datepicker" }}
+        {% elif field.label != "ID Document" %}
+            {{ field }}
+        {% endif %}
 {% endblock %}

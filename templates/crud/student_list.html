@@ -1,67 +1,31 @@
-{% extends "base.html" %}
+{% extends "list_base.html" %}
 {% load i18n %}
 {% load crud_extras %}
 
-{% block body %}
-    <br>
-    <div class="row">
-        <div class="col s6">
-            <h4> {% trans "Student's list:" %} </h4>
-        </div>
+{% block header %} {% trans "Student's list:" %} {% endblock %}
 
-        <div class="input-field col s6">
-            <i class="material-icons prefix"> search </i>
-            <input type="text" id="search_field" class="validate">
-            <label for="search_field"> {% trans "Search" %} </label>
-        </div>
-    </div>
+{% block table %}
+    <thead>
+        <th> {% trans "Name" %} </th>
+        <th> {% trans "Registry" %} </th>
+        <th> {% trans "Class" %} </th>
+    </thead>
 
-    <table class="responsive-table centered highlight z-depth-1" id="table">
-        <thead>
-            <th> {% trans "Name" %} </th>
-            <th> {% trans "Registry" %} </th>
-            <th> {% trans "Class" %} </th>
-        </thead>
-
-        <tbody>
-            {% for student in object_list %}
-                <div class="responsive-table centered highlight">
-                    <tr>
-                        <td> <a href="{{ student.get_absolute_url }}"> {{ student.name }} </a> </td>
-                        <td> {{ student.registry }} </td>
-                        <td> {{ student.current_class }} </td>
-                    </tr>
-                </div>
-            {% empty %}
+    <tbody>
+        {% for student in object_list %}
+            <div class="responsive-table centered highlight">
                 <tr>
-                    <td> {% trans "Empty list." %} </td>
+                    <td> <a href="{{ student.get_absolute_url }}"> {{ student.name }} </a> </td>
+                    <td> {{ student.registry }} </td>
+                    <td> {{ student.current_class }} </td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <br><br>
-
-        <div class="right-align">
-            <a href="{% back %}" class="wave-effects waves-light btn grey"> <i class="material-icons left"> chevron_left </i> {% trans "Back" %} </a>
-            <a href="{% url 'student_register' %}" class="wave-effects waves-light btn green"> <i class="material-icons right"> add_box </i> {% trans "New" %} </a>
-        </div>
-
+            </div>
+        {% empty %}
+            <tr>
+                <td> {% trans "Empty list." %} </td>
+            </tr>
+        {% endfor %}
+    </tbody>
 {% endblock %}
 
-{% block script %}
-    <script type="text/javascript">
-        var $rows = $('#table tbody tr');
-        $('#search_field').keyup(function() {
-
-            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-            reg = RegExp(val, 'i'),
-            text;
-
-            $rows.show().filter(function() {
-                text = $(this).text().replace(/\s+/g, ' ');
-                return !reg.test(text);
-            }).hide();
-        });
-    </script>
-{% endblock %}
+{% block new_btn_href %} {% url 'student_register' %} {% endblock %}
