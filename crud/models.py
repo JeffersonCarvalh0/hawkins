@@ -39,7 +39,7 @@ class Subject(models.Model):
         but it may vary depending on the school.
     '''
     name = models.CharField(_('Name'), max_length=255)
-    school_class = models.ForeignKey('Class', on_delete=models.CASCADE, verbose_name=_('Class'))
+    school_class = models.ForeignKey('Class', on_delete=models.CASCADE, verbose_name=_('Class'), related_name='subjects')
 
     class Meta:
         # Translators: School's subject
