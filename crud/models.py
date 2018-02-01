@@ -55,7 +55,7 @@ class Grade(models.Model):
     '''
         A Student's grade of some subject.
     '''
-    grade = models.FloatField(_('Grade'))
+    grade = models.FloatField(_('Grade'), null=True, blank=True, default=None)
     order = models.SmallIntegerField(_('Order'))
     retake = models.BooleanField(_('Retake'), default=False)
     student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='grades')
