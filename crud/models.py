@@ -32,41 +32,6 @@ class Student(models.Model):
     def get_absolute_url(self):
         return reverse('student_detail', args=[self.registry])
 
-    def partial_average(self, subject=None):
-        if subject:
-            grades = self.grades.filter(subject=subject)
-        else:
-            grades = self.grades.all()
-
-        partial_avg = 0.00
-        grade_counter = 0
-
-        for grade in grades:
-            if grade.value is not None:
-                partial_avg += grade.value
-                grade_couter += 1
-
-        partial_avg /= grade_counter
-        return partial_avg
-
-    def total_average(self, subject=None):
-        if subject:
-            grades = self.grades.filter(subject=subject)
-        else:
-            grades = self.grades.all()
-
-        total_avg = 0.00
-        grade_counter = len(grades)
-
-        for grade in grades:
-            if grade.retake and grade.value is not None:
-                total_avg += grade.value
-            else
-                total_avg += grade.value or 0
-
-        total_avg /= grade_counter
-        return total_avg
-
 class Subject(models.Model):
     '''
         A  school's subject. Each subject is related to a class. It is also
