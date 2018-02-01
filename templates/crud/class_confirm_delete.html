@@ -1,5 +1,22 @@
-{% extends "base.html" %}
+{% extends "confirm_delete_base.html" %}
+{% load i18n %}
+{% load crud_extras %}
 
-{% block body %}
-    <h1> Classes delete </h1>
+{% block header %} {% trans "Delete class" %} {% endblock %}
+
+{% block card_title %} {% trans "Class info:" %} {% endblock %}
+
+{% block card_content %}
+    <p> {{ object|verbose_name:"name" }}: {{ object.name }} </p>
+
+    <br>
+
+    <p> {{ object.grades.verbose_name_plural }}: </p>
+    <ul>
+        {% for subject in object.subjects.all %}
+            <p> {{ subject|verbose_name:"name" }} </p>
+        {% empty %}
+            {% trans "No subjects." %}
+        {% endfor %}
+    </ul>
 {% endblock %}
