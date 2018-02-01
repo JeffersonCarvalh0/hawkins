@@ -32,8 +32,12 @@ class Student(models.Model):
     def get_absolute_url(self):
         return reverse('student_detail', args=[self.registry])
 
-    def partial_average(self):
-        grades = self.grades.all()
+    def partial_average(self, subject=None):
+        if subject:
+            grades = self.grades.filter(subject=subject)
+        else:
+            grades = self.grades.all()
+
         partial_avg = 0.00
         grade_counter = 0
 
@@ -45,8 +49,12 @@ class Student(models.Model):
         partial_avg /= grade_counter
         return partial_avg
 
-    def total_average(self):
-        grades = self.grades.all()
+    def total_average(self, subject=None):
+        if subject:
+            grades = self.grades.filter(subject=subject)
+        else:
+            grades = self.grades.all()
+
         total_avg = 0.00
         grade_counter = len(grades)
 
