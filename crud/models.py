@@ -20,7 +20,7 @@ class Student(models.Model):
     phone = models.CharField(_('Telephone number'), max_length=11)
     registry = models.SlugField(_('Registry'), max_length=30, unique=True, primary_key=True)
     birth = models.DateField(_('Birth date'), null=True)
-    current_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True, verbose_name=_('Class'))
+    current_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True, verbose_name=_('Class'), related_name='students')
     document = models.FileField(_('ID Document'), upload_to=documentPath)
 
     class Meta:
