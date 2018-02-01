@@ -38,8 +38,8 @@ class Student(models.Model):
         grade_counter = 0
 
         for grade in grades:
-            if grade is not None:
-                partial_avg += grade
+            if grade.value is not None:
+                partial_avg += grade.value
                 grade_couter += 1
 
         partial_avg /= grade_counter
@@ -51,7 +51,10 @@ class Student(models.Model):
         grade_counter = len(grades)
 
         for grade in grades:
-            total_avg += 0 if grade is None else grade
+            if grade.retake and grade.value is not None:
+                total_avg += grade.value
+            else
+                total_avg += grade.value or 0
 
         total_avg /= grade_counter
         return total_avg
@@ -79,7 +82,7 @@ class Grade(models.Model):
     '''
         A Student's grade of some subject.
     '''
-    grade = models.FloatField(_('Grade'), null=True, blank=True, default=None)
+    value = models.FloatField(_('Grade'), null=True, blank=True, default=None)
     order = models.SmallIntegerField(_('Order'))
     retake = models.BooleanField(_('Retake'), default=False)
     student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='grades')
