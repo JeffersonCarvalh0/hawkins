@@ -64,6 +64,7 @@ class Grade(models.Model):
 
     class Meta:
         verbose_name = _('Grade')
+        ordering = ['order']
 
     def __str__(self):
         return '%s, %s, %.2f' %(self.subject.student, self.subject.name, self.grade)
