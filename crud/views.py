@@ -83,7 +83,6 @@ class StudentDelete(BreadcrumbMixin, DeleteView):
 class ClassList(BreadcrumbMixin, ListView):
     template_name = 'crud/class_list.html'
     model = Class
-    queryset = Class.objects.all()
     verbose_name = _('Classes')
 
 class ClassDetail(BreadcrumbMixin, DetailView):
