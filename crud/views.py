@@ -63,7 +63,7 @@ class StudentDetail(BreadcrumbMixin, DetailView):
     verbose_name = _('View student')
 
     def get_queryset(self):
-        return Student.objects.prefetch_related('grades').filter(pk=self.kwargs['pk']).order_by('grades__order')
+        return Student.objects.prefetch_related('grades').order_by('grades__order')
 
 class StudentRegister(BreadcrumbMixin, CreateView):
     model = Student
@@ -92,7 +92,7 @@ class ClassDetail(BreadcrumbMixin, DetailView):
     verbose_name = _('View class')
 
     def get_queryset(self):
-        return Class.objects.prefetch_related('subjects', 'students').filter(self.kwargs['pk'])
+        return Class.objects.prefetch_related('subjects', 'students')
 
 class ClassRegister(BreadcrumbMixin, CreateView):
     model = Class
@@ -110,7 +110,7 @@ class ClassDelete(BreadcrumbMixin, DeleteView):
     verbose_name = _('Delete class')
 
     def get_queryset(self):
-        return Class.objects.prefetch_related('subjects').filter(self.kwargs['pk'])
+        return Class.objects.prefetch_related('subjects')
 
 class SubjectList(BreadcrumbMixin, ListView):
     template_name = 'crud/subject_list.html'
