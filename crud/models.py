@@ -61,7 +61,6 @@ class Grade(models.Model):
     retake = models.BooleanField(_('Retake'), default=False)
     student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='grades')
     subject = models.ForeignKey('Subject', on_delete=models.PROTECT)
-    school_class = models.ForeignKey('Class', on_delete=models.PROTECT)
 
     class Meta:
         verbose_name = _('Grade')
