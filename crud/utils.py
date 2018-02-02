@@ -52,7 +52,7 @@ def total_average(grade_queryset):
     for grade in grade_queryset:
         if grade.retake and grade.value is not None:
             total_avg += grade.value
-        else
+        else:
             total_avg += grade.value or 0
 
     total_avg /= grade_counter

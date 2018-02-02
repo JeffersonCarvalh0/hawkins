@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -71,6 +72,7 @@ class Grade(models.Model):
 
 class Class(models.Model):
     name = models.CharField(_('Name'), max_length=5)
+    year = models.SmallIntegerField(_('Year'), default=date.today().year)
 
     class Meta:
         # Translators: School's grade
