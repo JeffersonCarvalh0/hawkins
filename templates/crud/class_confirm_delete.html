@@ -11,10 +11,14 @@
 
     <br>
 
-    <p> {{ object.grades.verbose_name_plural }}: </p>
+    <p> {{ object|verbose_name:"year" }}: {{ object.year }} </p>
+
+    <br>
+
+    <p> {% trans "Subjects:" %} </p>
     <ul>
         {% for subject in object.subjects.all %}
-            <p> {{ subject|verbose_name:"name" }} </p>
+            {{ subject.name }}
         {% empty %}
             {% trans "No subjects." %}
         {% endfor %}
