@@ -8,19 +8,14 @@
 
 {% block card_content %}
     <p> {{ object|verbose_name:"name" }}: {{ object.name }} </p>
-
-    <br>
-
     <p> {{ object|verbose_name:"year" }}: {{ object.year }} </p>
-
-    <br>
-
+    
     <p> {% trans "Subjects:" %} </p>
     <ul>
         {% for subject in object.subjects.all %}
-            {{ subject.name }}
+            <li> {{ subject.name }} </li>
         {% empty %}
-            {% trans "No subjects." %}
+            <li> {% trans "No subjects." %} </li>
         {% endfor %}
     </ul>
 {% endblock %}
