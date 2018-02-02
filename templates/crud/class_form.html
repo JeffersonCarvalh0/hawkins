@@ -5,7 +5,14 @@
 {% block sub_header %} {% trans "Insert information about the class here." %} {% endblock %}
 
 {% block inputs %}
-    <i class="material-icons prefix"> local_offer </i>
-    {{ form.name.label_tag }}
-    {{ form.name }}
+    {% if field.label == 'Name' %}
+        <i class="material-icons prefix"> class </i>
+    {% endif %}
+
+    {% if field.label == 'Year' %}
+        <i class="material-icons prefix"> calendar </i>
+    {% endif %}
+
+    {{ field.label_tag }}
+    {{ field }}
 {% endblock %}
