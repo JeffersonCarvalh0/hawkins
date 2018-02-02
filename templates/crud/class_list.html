@@ -5,10 +5,12 @@
 
 {% block thead %}
     <th> {% trans "Class" %} </th>
+    <th> {% trans "Year" %} </th>
 {% endblock %}
 
 {% block tr %}
     <td> <a href="{{ element.get_absolute_url }}"> {{ element.name }} </a> </td>
+    <td> {{ element.year }} </td>
 {% endblock %}
 
 {% block new_btn_href %} {% url 'class_register' %} {% endblock %}
