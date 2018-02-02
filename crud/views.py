@@ -63,7 +63,7 @@ class StudentDetail(BreadcrumbMixin, DetailView):
     verbose_name = _('View student')
 
     def get_queryset(self):
-        return Student.objects.prefetch_related('grades')
+        return Student.objects.prefetch_related('grades').filter(pk=self.kwargs.get('pk'))
 
 class StudentRegister(BreadcrumbMixin, CreateView):
     model = Student
@@ -91,7 +91,7 @@ class ClassDetail(BreadcrumbMixin, DetailView):
     verbose_name = _('View class')
 
     def get_queryset(self):
-        return Class.objects.prefetch_related('subjects', 'students__grades')
+        return Class.objects.prefetch_related('subjects__grades__students').filter(pk=self.kwargs.get('pk'))
 
 class ClassRegister(BreadcrumbMixin, CreateView):
     model = Class
