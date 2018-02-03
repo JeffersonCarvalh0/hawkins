@@ -19,8 +19,8 @@ def total_avg(queryset):
     return total_average(queryset)
 
 @register.filter
-def subject(grades, subject):
-    return grades.filter(subject=subject)
+def student(grades, student):
+    return grades.filter(student=student)
 
 @register.filter
 def addcss(field, css):
