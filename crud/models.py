@@ -21,6 +21,7 @@ class Student(models.Model):
     phone = models.CharField(_('Telephone number'), max_length=11)
     registry = models.SlugField(_('Registry'), max_length=30, unique=True, primary_key=True)
     birth = models.DateField(_('Birth date'), null=True)
+    classes = models.ManyToManyField('Class', verbose_name=_('Classes'))
     current_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True, verbose_name=_('Class'), related_name='students')
     document = models.FileField(_('ID Document'), upload_to=documentPath)
 
@@ -32,6 +33,15 @@ class Student(models.Model):
 
     def get_absolute_url(self):
         return reverse('student_detail', args=[self.registry])
+
+    def save(self, *args, **kwargs):
+        '''
+            Adds the current class in classes if it's not there, before saving
+            the object in the database.
+        '''
+        if not self.classes.filter(pk=self.current_class.id).exists():
+            self.classes.add(self.current_class)
+        super().save(*args, **kwargs)
 
 class Subject(models.Model):
     '''
@@ -60,7 +70,7 @@ class Grade(models.Model):
     order = models.SmallIntegerField(_('Order'))
     retake = models.BooleanField(_('Retake'), default=False)
     student = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='grades')
-    subject = models.ForeignKey('Subject', on_delete=models.PROTECT)
+    subject = models.ForeignKey('Subject', on_delete=models.PROTECT, related_name='grades')
 
     class Meta:
         verbose_name = _('Grade')
