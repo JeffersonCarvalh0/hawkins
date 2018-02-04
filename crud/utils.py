@@ -23,10 +23,6 @@ def getLanguageChoices():
 
     return choices
 
-def cleanGrades(grades):
-    print(grades)
-    return grades
-
 def partial_average(grade_queryset):
     '''
         Calculates the partial average from a queryset of grades.

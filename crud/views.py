@@ -1,5 +1,4 @@
 from .models import Student, Class, Subject
-from .utils import cleanGrades
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils.translation import ugettext as _
