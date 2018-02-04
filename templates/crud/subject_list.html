@@ -10,7 +10,7 @@
 
 {% block tr %}
     <td> <a href="{{ element.get_absolute_url }}"> {{ element.name }} </a> </td>
-    <td> {{ element.class }} </td>
+    <td> <a href="{{ element.school_class.get_absolute_url }}"> {{ element.school_class }} </a> </td>
 {% endblock %}
 
 {% block new_btn_href %} {% url 'subject_register' %} {% endblock %}
