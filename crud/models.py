@@ -59,9 +59,6 @@ class Subject(models.Model):
     def __str__(self):
         return '%s, %s, %s' %(self.student, self.name, self.school_class)
 
-    def get_absolute_url(self):
-        return reverse('subject_detail', args=[self.id])
-
 class Grade(models.Model):
     '''
         A Student's grade of some subject.

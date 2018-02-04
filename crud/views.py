@@ -110,20 +110,10 @@ class SubjectList(BreadcrumbMixin, ListView):
     model = Subject
     verbose_name = _('Subjects')
 
-# class SubjectDetail(BreadcrumbMixin, DetailView):
-#     template_name = 'crud/subject_detail.html'
-#     model = Subject
-#     verbose_name = _('View subject')
-
 class SubjectRegister(BreadcrumbMixin, CreateView):
     model = Subject
     fields = '__all__'
     verbose_name = _('Register new subject')
-
-# class SubjectUpdate(BreadcrumbMixin, UpdateView):
-#     model = Subject
-#     fields = '__all__'
-#     verbose_name = _('Update subject')
 
 class SubjectDelete(BreadcrumbMixin, DeleteView):
     model = Subject

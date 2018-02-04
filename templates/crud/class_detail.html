@@ -12,10 +12,17 @@
             <div class="col s1">
                 <i class="material-icons medium"> class </i>
             </div>
-
-            <div class="col s11">
+            <div class="col s5">
                 <p> <h4> {{ object|verbose_name:"name" }} </h4> </p>
                 {{ object.name }}
+            </div>
+
+            <div class="col s1">
+                <i class="material-icons medium"> today </i>
+            </div>
+            <div class="col s5">
+                <p> <h4> {{ object|verbose_name:"year" }} </h4> </p>
+                {{ object.year }}
             </div>
         </div>
     </div>
@@ -31,13 +38,22 @@
             <div class="col s11">
                 <p> <h4> {% trans "Subjects" %} </h4> </p>
 
-                <div class="collection z-depth-1">
+                <ul class="collection z-depth-1">
                     {% for subject in object.subjects.all %}
-                        <a href="{{ subject.get_absolute_url }}" class="collection-item"> {{ subject.name }} </a>
+                        <li class="collection-item">
+                            <div>
+                                {{ subject.name }}
+                                <a href="{% url 'subject_delete' subject.id %}" class="secondary-content btn-floating btn-small red tooltipped" data-position="right" data-delay="50" data-tooltip="{% trans 'Delete this subject' %}" style="float:right; margin-top: -9px"> <i class="material-icons"> delete </i> </a>
+                            </div>
+                        </li>
                     {% empty %}
                         {% trans "Empty list." %}
                     {% endfor %}
-                </div>
+                </ul>
+            </div>
+
+            <div class="right-align">
+                <a href="{% url 'subject_register' %}" class="btn-floating btn-large waves-effect waves-light green tooltipped" data-position="left" data-delay="50" data-tooltip="{% trans 'Add new subject' %}"> <i class="material-icons"> add </i> </a>
             </div>
         </div>
     </div>
@@ -77,4 +93,12 @@
             </div>
         </div>
     </div>
+
+    <div class="right-align">
+        <a href="{% back %}" class="waves-effect waves-light btn grey"> <i class="material-icons left"> chevron_left </i> {% trans "Back" %} </a>
+        <a href="{% url 'class_update' object.id %}" class="waves-effect waves-light btn green"> <i class="material-icons left"> edit </i> {% trans "Edit" %} </a>
+        <a href="{% url 'class_delete' object.id %}" class="waves-effect waves-light btn red"> <i class="material-icons left"> delete </i> {% trans "Delete" %} </a>
+    </div>
+
+    <br><br>
 {% endblock %}

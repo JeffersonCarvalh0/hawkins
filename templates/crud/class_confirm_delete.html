@@ -9,13 +9,13 @@
 {% block card_content %}
     <p> {{ object|verbose_name:"name" }}: {{ object.name }} </p>
     <p> {{ object|verbose_name:"year" }}: {{ object.year }} </p>
-    
-    <p> {% trans "Subjects:" %} </p>
-    <ul>
+
+    <ul class="collection with-header black-text">
+        <li class="collection-header"> <p> {% trans "Subjects:" %} </p> </li>
         {% for subject in object.subjects.all %}
-            <li> {{ subject.name }} </li>
+            <li class="collection-item"> {{ subject.name }} </li>
         {% empty %}
-            <li> {% trans "No subjects." %} </li>
+            <li class="collection-item"> {% trans "No subjects." %} </li>
         {% endfor %}
     </ul>
 {% endblock %}
