@@ -29,13 +29,8 @@ class BreadcrumbMixin(object):
             'verbose_name' : self.verbose_name,
         }
 
-        if kwargs.get('object') is not None:
-            obj = kwargs['object']
-        else:
-            obj = context.get('object')
-
-        if obj is not None:
-            new_value['url'] = reverse(new_value['url_name'], args=[self.kwargs.get('pk')])
+        if self.kwargs.get('pk'):
+            new_value['url'] = reverse(new_value['url_name'], args=[self.kwargs['pk']])
         else:
             new_value['url'] = reverse(new_value['url_name'])
 
