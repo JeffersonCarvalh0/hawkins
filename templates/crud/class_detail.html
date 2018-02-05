@@ -67,7 +67,37 @@
             </div>
 
             <div class="col s11">
-                <p> <h4> {% trans "Students" %} </h4> </p>
+                {% trans "Students" %}
+                <ul class="collection z-depth-1">
+                    {% for student in object.students.all %}
+                        <li class="collection-item">
+                            <div>
+                                <a href="{% url 'student_detail' student.registry %}"> {{ student.name }}({{ student.registry }}) </a>
+                                <a href="{% url 'student_delete' student.registry %}" class="secondary-content btn-floating btn-small red tooltipped" data-position="right" data-delay="50" data-tooltip="{% trans 'Remove from this class' %}" style="float:right; margin-top: -9px"> <i class="material-icons"> delete </i> </a>
+                            </div>
+                        </li>
+                    {% empty %}
+                        {% trans "Empty list." %}
+                    {% endfor %}
+                </ul>
+
+                <div class="right-align">
+                    <a href="!#" class="btn-floating btn-large waves-effect waves-light green tooltipped" data-position="left" data-delay="50" data-tooltip="{% trans 'Add to this class' %}"> <i class="material-icons"> add </i> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+        <div class="row">
+            <div class="col s1">
+                <i class="material-icons medium"> insert_chart </i>
+            </div>
+
+            <div class="col s11">
+                <p> <h4> {% trans "Grades" %} </h4> </p>
 
                 <table class="centered responsive-table striped z-depth-1">
                     <thead>
