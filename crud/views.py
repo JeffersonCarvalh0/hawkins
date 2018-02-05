@@ -13,6 +13,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 class BreadcrumbMixin(object):
     index = False
     verbose_name = None
+    args_names = ['pk']
 
     def breadcrumbUpdate(self, breadcrumb, new_value):
         for i in range(len(breadcrumb)):
@@ -30,8 +31,12 @@ class BreadcrumbMixin(object):
             'verbose_name' : self.verbose_name,
         }
 
+        args_list = []
+        for arg in self.args_names:
+            args_list.append(self.kwargs.get(arg))
+
         if self.kwargs.get('pk'):
-            new_value['url'] = reverse(new_value['url_name'], args=[self.kwargs['pk']])
+            new_value['url'] = reverse(new_value['url_name'], args=args_list)
         else:
             new_value['url'] = reverse(new_value['url_name'])
 
@@ -127,8 +132,11 @@ class SubjectRegister(BreadcrumbMixin, CreateView):
 
 class SubjectDelete(BreadcrumbMixin, DeleteView):
     model = Subject
-    success_url = reverse_lazy('subject_list')
     verbose_name = _('Delete subject')
+    args_names = ['class', 'pk']
+
+    def get_success_url(self):
+        return reverse('class_detail', args=[self.kwargs.get('class')])
 
 def settings(request):
     return render(request, 'settings.html', {})

@@ -43,7 +43,7 @@
                         <li class="collection-item">
                             <div>
                                 {{ subject.name }}
-                                <a href="{% url 'subject_delete' subject.id %}" class="secondary-content btn-floating btn-small red tooltipped" data-position="right" data-delay="50" data-tooltip="{% trans 'Delete this subject' %}" style="float:right; margin-top: -9px"> <i class="material-icons"> delete </i> </a>
+                                <a href="{% url 'subject_delete' object.id subject.id %}" class="secondary-content btn-floating btn-small red tooltipped" data-position="right" data-delay="50" data-tooltip="{% trans 'Delete this subject' %}" style="float:right; margin-top: -9px"> <i class="material-icons"> delete </i> </a>
                             </div>
                         </li>
                     {% empty %}

@@ -1,5 +1,17 @@
-{% extends "base.html" %}
+{% extends "confirm_delete_base.html" %}
+{% load i18n %}
+{% load crud_extras %}
 
-{% block body %}
-    <h4> Subject delete </h4>
+{% block header %} {% trans "Delete subject" %} {% endblock %}
+
+{% block card_title %} {% trans "Subject info:" %} {% endblock %}
+
+{% block warning %}
+    {{ block.super }}
+    <p> <strong> {% trans "Notice: ALL GRADES RELATED TO THIS SUBJECT WILL BE ERASED!!!" %} </strong> </p>
+{% endblock %}
+
+{% block card_content %}
+    <p> {{ object|verbose_name:"name" }}: {{ object.name }} </p>
+    <p> {{ object|verbose_name:"school_class" }}: {{ object.school_class }} </p>
 {% endblock %}
