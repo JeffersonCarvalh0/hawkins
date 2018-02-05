@@ -33,8 +33,7 @@ urlpatterns += i18n_patterns(
     path('class/detail/<int:pk>/', views.ClassDetail.as_view(), name='class_detail'),
     path('class/update/<int:pk>/', views.ClassUpdate.as_view(), name='class_update'),
     path('class/delete/<int:pk>/', views.ClassDelete.as_view(), name='class_delete'),
-    path('subject/list', views.SubjectList.as_view(), name='subject_list'),
-    path('subject/register', views.SubjectRegister.as_view(), name='subject_register'),
+    path('subject/register/<int:pk>', views.SubjectRegister.as_view(), name='subject_register'),
     path('subject/delete/<int:pk>/', views.SubjectDelete.as_view(), name='subject_delete'),
     path('settings/', views.settings, name='settings')
 )

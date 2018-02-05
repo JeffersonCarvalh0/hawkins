@@ -1,4 +1,5 @@
 from .models import Student, Class, Subject
+from django.forms import modelform_factory
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils.translation import ugettext as _
@@ -112,8 +113,17 @@ class SubjectList(BreadcrumbMixin, ListView):
 
 class SubjectRegister(BreadcrumbMixin, CreateView):
     model = Subject
-    fields = '__all__'
     verbose_name = _('Register new subject')
+
+    def get_form_class(self):
+        return modelform_factory(Subject, fields=('name',))
+
+    def form_valid(self, form):
+        form.instance.school_class_id = self.kwargs.get('pk')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('class_detail', args=[self.kwargs.get('pk')])
 
 class SubjectDelete(BreadcrumbMixin, DeleteView):
     model = Subject

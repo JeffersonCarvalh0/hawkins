@@ -53,7 +53,7 @@
             </div>
 
             <div class="right-align">
-                <a href="{% url 'subject_register' %}" class="btn-floating btn-large waves-effect waves-light green tooltipped" data-position="left" data-delay="50" data-tooltip="{% trans 'Add new subject' %}"> <i class="material-icons"> add </i> </a>
+                <a href="{% url 'subject_register' object.id %}" class="btn-floating btn-large waves-effect waves-light green tooltipped" data-position="left" data-delay="50" data-tooltip="{% trans 'Add new subject' %}"> <i class="material-icons"> add </i> </a>
             </div>
         </div>
     </div>
