@@ -95,12 +95,12 @@ class ClassDetail(BreadcrumbMixin, DetailView):
 
 class ClassRegister(BreadcrumbMixin, CreateView):
     model = Class
-    fields = '__all__'
+    form_class = modelform_factory(Class, exclude=('student_body',))
     verbose_name = _('Register new class')
 
 class ClassUpdate(BreadcrumbMixin, UpdateView):
     model = Class
-    fields = '__all__'
+    form_class = modelform_factory(Class, exclude=('student_body',))
     verbose_name = _('Update class')
 
 class ClassDelete(BreadcrumbMixin, DeleteView):
