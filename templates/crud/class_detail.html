@@ -67,13 +67,13 @@
             </div>
 
             <div class="col s11">
-                {% trans "Students" %}
+                <p> <h4> {% trans "Students" %} </h4> </p>
                 <ul class="collection z-depth-1">
-                    {% for student in object.students.all %}
+                    {% for student in object.student_body.all %}
                         <li class="collection-item">
                             <div>
                                 <a href="{% url 'student_detail' student.registry %}"> {{ student.name }}({{ student.registry }}) </a>
-                                <a href="{% url 'student_delete' student.registry %}" class="secondary-content btn-floating btn-small red tooltipped" data-position="right" data-delay="50" data-tooltip="{% trans 'Remove from this class' %}" style="float:right; margin-top: -9px"> <i class="material-icons"> delete </i> </a>
+                                <a href="{% url 'class_remove_student' object.id student.registry %}" class="secondary-content btn-floating btn-small red tooltipped" data-position="right" data-delay="50" data-tooltip="{% trans 'Remove from this class' %}" style="float:right; margin-top: -9px"> <i class="material-icons"> delete </i> </a>
                             </div>
                         </li>
                     {% empty %}

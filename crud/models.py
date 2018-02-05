@@ -21,7 +21,6 @@ class Student(models.Model):
     phone = models.CharField(_('Telephone number'), max_length=11)
     registry = models.SlugField(_('Registry'), max_length=30, unique=True, primary_key=True)
     birth = models.DateField(_('Birth date'), null=True)
-    current_class = models.ForeignKey('Class', on_delete=models.PROTECT, null=True, verbose_name=_('Class'), related_name='students')
     document = models.FileField(_('ID Document'), upload_to=documentPath)
 
     class Meta:
@@ -34,12 +33,8 @@ class Student(models.Model):
         return reverse('student_detail', args=[self.registry])
 
     def save(self, *args, **kwargs):
-        '''
-            Adds the current class in classes if it's not there, before saving
-            the object in the database.
-        '''
-        if not self.classes.filter(pk=self.current_class.id).exists():
-            self.classes.add(self.current_class)
+        if not self.current_class.student_body.filter(pk=self.registry).exists():
+            self.current_class.student_body.add(self)
         super().save(*args, **kwargs)
 
 class Subject(models.Model):
@@ -78,7 +73,7 @@ class Grade(models.Model):
 class Class(models.Model):
     name = models.CharField(_('Name'), max_length=5)
     year = models.SmallIntegerField(_('Year'), default=date.today().year)
-    student_body = models.ManyToManyField('Student', verbose_name=_('Students'), related_name='classes')
+    students = models.ManyToManyField('Student', verbose_name=_('Students'), related_name='classes')
 
     class Meta:
         # Translators: School's grade

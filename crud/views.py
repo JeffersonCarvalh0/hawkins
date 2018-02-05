@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -91,7 +92,7 @@ class ClassDetail(BreadcrumbMixin, DetailView):
     verbose_name = _('View class')
 
     def get_queryset(self):
-        return Class.objects.prefetch_related('subjects__grades__students').filter(pk=self.kwargs.get('pk'))
+        return Class.objects.prefetch_related('student_body', 'subjects__grades__students').filter(pk=self.kwargs.get('pk'))
 
 class ClassRegister(BreadcrumbMixin, CreateView):
     model = Class
@@ -110,6 +111,16 @@ class ClassDelete(BreadcrumbMixin, DeleteView):
 
     def get_queryset(self):
         return Class.objects.prefetch_related('subjects')
+
+class ClassRemoveStudent(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        school_class = Class.objects.get(pk=kwargs.get('class'))
+        student = Student.objects.get(pk=kwargs.get('student'))
+        school_class.student_body.remove(student)
+        return reverse('class_detail', args=[kwargs.get('class')])
+
+class ClassAddStudent(TemplateView):
+    pass
 
 class SubjectList(BreadcrumbMixin, ListView):
     template_name = 'crud/subject_list.html'

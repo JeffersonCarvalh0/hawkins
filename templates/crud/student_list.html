@@ -6,13 +6,11 @@
 {% block thead %}
     <th> {% trans "Name" %} </th>
     <th> {% trans "Registry" %} </th>
-    <th> {% trans "Class" %} </th>
 {% endblock %}
 
 {% block tr %}
     <td> <a href="{{ element.get_absolute_url }}"> {{ element.name }} </a> </td>
     <td> {{ element.registry }} </td>
-    <td> <a href="{{ element.current_class.get_absolute_url }}"> {{ element.current_class }} </a> </td>
 {% endblock %}
 
 {% block new_btn_href %} {% url 'student_register' %} {% endblock %}

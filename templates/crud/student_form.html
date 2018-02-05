@@ -22,10 +22,6 @@
             <i class="material-icons prefix"> child_care </i>
         {% endif %}
 
-        {% if field.label == 'Class' %}
-            <i class="material-icons prefix"> class </i>
-        {% endif %}
-
         {% if field.label == 'ID Document' %}
             <div class="file-field input-field">
                 <div class="btn">
@@ -38,7 +34,7 @@
             </div>
         {% endif %}
 
-        {% if field.label != "ID Document" and field.label != 'Class' %}
+        {% if field.label != "ID Document" %}
             {{ field.label_tag }}
         {% endif %}
 
