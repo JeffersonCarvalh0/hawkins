@@ -69,7 +69,7 @@
             <div class="col s11">
                 <p> <h4> {% trans "Students" %} </h4> </p>
                 <ul class="collection z-depth-1">
-                    {% for student in object.student_body.all %}
+                    {% for student in object.students.all %}
                         <li class="collection-item">
                             <div>
                                 <a href="{% url 'student_detail' student.registry %}"> {{ student.name }}({{ student.registry }}) </a>
@@ -82,7 +82,7 @@
                 </ul>
 
                 <div class="right-align">
-                    <a href="!#" class="btn-floating btn-large waves-effect waves-light green tooltipped" data-position="left" data-delay="50" data-tooltip="{% trans 'Add to this class' %}"> <i class="material-icons"> add </i> </a>
+                    <a href="{% url 'class_add_student' object.id  %}" class="btn-floating btn-large waves-effect waves-light green tooltipped" data-position="left" data-delay="50" data-tooltip="{% trans 'Add to this class' %}"> <i class="material-icons"> add </i> </a>
                 </div>
             </div>
         </div>

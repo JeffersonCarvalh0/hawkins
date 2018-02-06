@@ -27,9 +27,11 @@
                 {% endfor %}
             {% endif %}
 
+            {% block custom_inputs %}
                 <div class="input-field">
                     {% block inputs %} {# Code for each input #} {% endblock %}
                 </div>
+            {% endblock %}
         {% endfor %}
 
         <br><br>

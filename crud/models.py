@@ -33,8 +33,8 @@ class Student(models.Model):
         return reverse('student_detail', args=[self.registry])
 
     def save(self, *args, **kwargs):
-        if not self.current_class.student_body.filter(pk=self.registry).exists():
-            self.current_class.student_body.add(self)
+        if not self.current_class.students.filter(pk=self.registry).exists():
+            self.current_class.students.add(self)
         super().save(*args, **kwargs)
 
 class Subject(models.Model):

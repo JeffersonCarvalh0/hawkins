@@ -1,0 +1,20 @@
+{% extends "form_base.html" %}
+{% load i18n %}
+{% load crud_extras %}
+
+{% block header %} {% trans "Add students to class" %} {% endblock %}
+{% block sub_header %} {% trans "Select the students you want to add." %} {% endblock %}
+
+{% block custom_inputs %}
+    <ul id="id_{{ field.name }}">
+        {% for pk, choice in field.field.widget.choices %}
+            <li>
+                <p>
+                    <input {% if pk in defaults %} checked {% endif %} type="checkbox" name="{{ field.name }}" value="{{ pk }}" id="id_{{ field.name }}_{{ forloop.counter0 }}"/>
+                    <label for="id_{{ field.name }}_{{ forloop.counter0 }}"> {{ choice }} </label>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
