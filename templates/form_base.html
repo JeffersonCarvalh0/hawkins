@@ -3,8 +3,10 @@
 {% load crud_extras %}
 
 {% block body %}
-    <h4> {% block header %} {% endblock %} </h4>
-    <h5> {% block sub_header %} {% endblock %} </h5>
+    {% block top %}
+        <h4> {% block header %} {% endblock %} </h4>
+        <h5> {% block sub_header %} {% endblock %} </h5>
+    {% endblock %}
 
     <br>
 
