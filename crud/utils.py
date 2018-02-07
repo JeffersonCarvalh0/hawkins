@@ -35,8 +35,7 @@ def partial_average(grade_queryset):
             partial_avg += grade.value
             grade_couter += 1
 
-    partial_avg /= grade_counter
-    return partial_avg
+    return 0 if grade_counter == 0 else partial_avg / grade_counter
 
 def total_average(grade_queryset):
     '''
@@ -51,5 +50,4 @@ def total_average(grade_queryset):
         else:
             total_avg += grade.value or 0
 
-    total_avg /= grade_counter
-    return total_avg
+    return 0 if grade_counter == 0 else total_avg / grade_counter

@@ -75,17 +75,69 @@
         </div>
     </div>
 
-    <h2> {% trans "Grades:" %} </h2>
+    <div class="divider"></div>
 
-    <ul class="tabs">
-        {% if grades.exists %}
-
-        {% else %}
-            <div class="col s12">
-                {% trans "Nothing to show." %}
+    <div class="section">
+        <div class="row">
+            <div class="col s1">
+                <i class="material-icons medium"> insert_chart </i>
             </div>
-        {% endif %}
-    </ul>
+
+            <div class="col s11">
+                <h2> {% trans "Grades:" %} </h2>
+
+                {% if object.classes.exists %}
+                    <ul class="tabs">
+                        {% for class in object.classes.all %}
+                            <li class="tab col s2"> <a href="#swipe-{{ forloop.counter }}"> {{ class.name }} </a> </li>
+                        {% endfor %}
+                    </ul>
+
+                    {% for class in object.classes.all %}
+                        <div class="col s12" id="swipe-{{ forloop.counter }}" style="height: auto">
+                            <table class="centered responsive-table striped">
+                                <thead>
+                                    <th> {% trans "Subject" %} </th>
+                                    {% for grade in class.subjects.grades.all %}
+                                        <th> N{{ forloop.counter }} </th>
+                                    {% endfor %}
+                                    <th> {% trans "Partial" %} </th>
+                                    <th> {% trans "Total" %} </th>
+                                    <th> {% trans "Approved" %} </th>
+                                </thead>
+
+                                <tbody>
+                                    {% for subject in class.subjects.all %}
+                                        <tr>
+                                            <td> {{ subject.name }} </td>
+                                            {% for grade in subject.grades.all %}
+                                                <td> {{ grade.value }} </td>
+                                            {% endfor %}
+                                            <td> {% partial_avg subject.grades|student:object %} </td>
+                                            {% total_avg subject.grades|student:object as total %}
+                                            <td> {{ total }} </td>
+                                            <td>
+                                                {% if total > 7.0 %}
+                                                    <i class="material-icons"> check </i>
+                                                {% else %}
+                                                    <i class="material-icons"> close </i>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+                    <div class="col s12">
+                        {% trans "Nothing to show." %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
     <br><br>
 
@@ -96,4 +148,15 @@
     </div>
 
     <br><br>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('ul.tabs').tabs({
+                swipeable : true,
+                responsiveThreshold : 2000
+            });
+        });
+    </script>
 {% endblock %}

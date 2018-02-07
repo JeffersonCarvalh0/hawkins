@@ -113,7 +113,7 @@
                             <tr>
                                 <td> <a href="{{ student.get_absolute_url }}"> {{ student.name }} </a> </td>
                                 {% for grade in object.subjects.grades.all %}
-                                    <td> {% partial_avg grades|student:student %} </td>
+                                    <td> {% total_avg grades|student:student %} </td>
                                 {% endfor %}
                                 <td></td>
                             </tr>
