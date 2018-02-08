@@ -83,8 +83,8 @@ class Class(models.Model):
     name = models.CharField(_('Name'), max_length=5)
     year = models.SmallIntegerField(_('Year'), default=date.today().year)
     students = models.ManyToManyField('Student', verbose_name=_('Students'), related_name='classes')
-    regular_grades_num = models.SmallIntegerField(_('Number of regular grades'), default=get_default_retake_num)
-    retake_grades_num = models.SmallIntegerField(_('Number of retakes'), default=get_default_grades_num)
+    regular_grades_num = models.SmallIntegerField(_('Number of regular grades'), default=get_default_grades_num)
+    retake_grades_num = models.SmallIntegerField(_('Number of retakes'), default=get_default_retake_num)
     avg = models.FloatField(_('Average to get approved'), default=get_default_avg)
 
     class Meta:
