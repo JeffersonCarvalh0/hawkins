@@ -1,5 +1,5 @@
 from .forms import ClassAddStudentForm
-from .models import Student, Class, Subject
+from .models import Student, Class, Subject, Settings
 from django.forms import modelform_factory, inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
@@ -52,6 +52,11 @@ class Index(BreadcrumbMixin, TemplateView):
     template_name = 'crud/index.html'
     index = True
     verbose_name = _('Index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['hawkins_settings'] = Settings.objects.get_or_create(pk=0)[0]
+        return context
 
 class StudentList(BreadcrumbMixin, ListView):
     template_name = 'crud/student_list.html'

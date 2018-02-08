@@ -1,7 +1,7 @@
 from datetime import date
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, get_language
 from .utils import documentPath, getLanguageChoices
 
 # Create your models here.
@@ -10,8 +10,22 @@ class Settings(models.Model):
     '''
         Application's settings
     '''
-    avg = models.FloatField(_('Average'))
-    lang = models.CharField(_('Language'), max_length=25, choices=getLanguageChoices())
+    default_avg = models.FloatField(_('Default average'), default=7.00)
+    default_grades_num = models.SmallIntegerField(_('Default number of regular grades'), default=3)
+    default_retake_num = models.SmallIntegerField(_('Default number of retake grades'), default=1)
+    lang = models.CharField(_('Language'), max_length=25, choices=getLanguageChoices(), null=True, default=get_language)
+
+def get_default_grades_num():
+    settings = Settings.objects.get_or_create(pk=0)[0]
+    return settings.default_grades_num
+
+def get_default_retake_num():
+    settings = Settings.objects.get_or_create(pk=0)[0]
+    return settings.default_retake_num
+
+def get_default_avg():
+    settings = Settings.objects.get_or_create(pk=0)[0]
+    return settings.default_avg
 
 class Student(models.Model):
     '''
@@ -69,6 +83,9 @@ class Class(models.Model):
     name = models.CharField(_('Name'), max_length=5)
     year = models.SmallIntegerField(_('Year'), default=date.today().year)
     students = models.ManyToManyField('Student', verbose_name=_('Students'), related_name='classes')
+    regular_grades_num = models.SmallIntegerField(_('Number of regular grades'), default=get_default_retake_num)
+    retake_grades_num = models.SmallIntegerField(_('Number of retakes'), default=get_default_grades_num)
+    avg = models.FloatField(_('Average to get approved'), default=get_default_avg)
 
     class Meta:
         # Translators: School's grade
