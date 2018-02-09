@@ -62,6 +62,17 @@ class Subject(models.Model):
     def __str__(self):
         return '%s, %s, %s' %(self.student, self.name, self.school_class)
 
+    def save(*args, **kwargs):
+        super().save(*args, **kwargs)
+
+        for student in self.school_class.students.all():
+            for i in range(self.school_class.regular_grades_num):
+                Grade.objects.create(order=i, student=student, subject=self)
+
+            for i in range(self.school_class.regular_grades_num, self.school_class.retake_grades_num + 1):
+                Grade.objects.create(order=i, retake=True, student=student, subject=self)
+
+
 class Grade(models.Model):
     '''
         A Student's grade of some subject.
@@ -78,6 +89,7 @@ class Grade(models.Model):
 
     def __str__(self):
         return '%s, %s, %.2f' %(self.subject.student, self.subject.name, self.grade)
+
 
 class Class(models.Model):
     name = models.CharField(_('Name'), max_length=5)

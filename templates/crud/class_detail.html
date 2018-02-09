@@ -31,6 +31,27 @@
 
     <div class="section">
         <div class="row">
+            <div class="col s4">
+                <p> <h5> {{ object|verbose_name:"regular_grades_num" }} </h5> </p>
+                {{ object.regular_grades_num }}
+            </div>
+
+            <div class="col s4">
+                <p> <h5> {{ object|verbose_name:"retake_grades_num" }} </h5> </p>
+                {{ object.retake_grades_num }}
+            </div>
+
+            <div class="col s4">
+                <p> <h5> {{ object|verbose_name:"avg" }} </h5> </p>
+                {{ object.avg }}
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+        <div class="row">
             <div class="col s1">
                 <i class="material-icons medium"> school </i>
             </div>

@@ -1,5 +1,5 @@
 from .forms import ClassAddStudentForm
-from .models import Student, Class, Subject, Settings
+from .models import Student, Class, Subject, Settings, Grade
 from django.forms import modelform_factory, inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve

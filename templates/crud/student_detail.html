@@ -86,8 +86,11 @@
                             <table class="centered responsive-table striped">
                                 <thead>
                                     <th> {% trans "Subject" %} </th>
-                                    {% for grade in class.subjects.grades.all %}
-                                        <th> N{{ forloop.counter }} </th>
+                                    {% for i in class.regular_grades_num|times %}
+                                        <th> N{{ i }} </th>
+                                    {% endfor %}
+                                    {% for i in class.retake_grades_num|times %}
+                                        <th> R{{ i }} </th>
                                     {% endfor %}
                                     <th> {% trans "Partial" %} </th>
                                     <th> {% trans "Total" %} </th>
@@ -105,7 +108,7 @@
                                             {% total_avg subject.grades|student:object as total %}
                                             <td> {{ total }} </td>
                                             <td>
-                                                {% if total > 7.0 %}
+                                                {% if total >= class.avg %}
                                                     <i class="material-icons"> check </i>
                                                 {% else %}
                                                     <i class="material-icons"> close </i>
