@@ -98,7 +98,7 @@ class ClassDetail(BreadcrumbMixin, DetailView):
     verbose_name = _('View class')
 
     def get_queryset(self):
-        return Class.objects.prefetch_related('students', 'subjects__grades__students').filter(pk=self.kwargs.get('pk'))
+        return Class.objects.prefetch_related('students', 'subjects__grades').filter(pk=self.kwargs.get('pk'))
 
 class ClassRegister(BreadcrumbMixin, CreateView):
     model = Class

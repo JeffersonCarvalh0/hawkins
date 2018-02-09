@@ -101,8 +101,8 @@
                                     {% for subject in class.subjects.all %}
                                         <tr>
                                             <td> {{ subject.name }} </td>
-                                            {% for grade in subject.grades.all %}
-                                                <td> {{ grade.value }} </td>
+                                            {% for grade in object.grades.all|subject:subject %}
+                                                <td> {{ grade.value|floatformat:2 }} </td>
                                             {% endfor %}
                                             <td> {% partial_avg subject.grades|student:object %} </td>
                                             {% total_avg subject.grades|student:object as total %}

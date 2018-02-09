@@ -18,14 +18,16 @@ def partial_avg(queryset):
     '''
         Returns a partial average from a queryset
     '''
-    return partial_average(queryset)
+    result = "%.2f" %(partial_average(queryset))
+    return result
 
 @register.simple_tag
 def total_avg(queryset):
     '''
         Returns the total average from a queryset
     '''
-    return total_average(queryset)
+    result = '%.2f' %(total_average(queryset))
+    return result
 
 @register.filter
 def student(grades, student):
@@ -34,6 +36,14 @@ def student(grades, student):
         of the specified student
     '''
     return grades.filter(student=student)
+
+@register.filter
+def subject(grades, subject):
+    '''
+        For a given queryset of grades of a student, returns only the grades
+        of the specified subject
+    '''
+    return grades.filter(subject=subject)
 
 @register.filter
 def addcss(field, css):

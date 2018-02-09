@@ -33,7 +33,7 @@ def partial_average(grade_queryset):
     for grade in grade_queryset:
         if grade.value is not None:
             partial_avg += grade.value
-            grade_couter += 1
+            grade_counter += 1
 
     return 0 if grade_counter == 0 else partial_avg / grade_counter
 
@@ -42,12 +42,12 @@ def total_average(grade_queryset):
         Calculates the total average from a queryset of grades.
     '''
     total_avg = 0.00
-    grade_counter = grade_queryset.count()
+    grade_counter = 0
 
     for grade in grade_queryset:
-        if grade.retake and grade.value is not None:
+        if grade.value or (grade.retake and grade.value):
             total_avg += grade.value
-        else:
-            total_avg += grade.value or 0
+        if not grade.retake or grade.value:
+            grade_counter += 1
 
     return 0 if grade_counter == 0 else total_avg / grade_counter
