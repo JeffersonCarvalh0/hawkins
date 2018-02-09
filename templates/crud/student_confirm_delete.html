@@ -6,8 +6,12 @@
 
 {% block card_title %} {% trans "Student info:" %} {% endblock %}
 
+{% block warning %}
+    {{ block.super }}
+    <p> <strong> {% trans "Notice: ALL DATA ABOUT THIS STUDENT WILL BE LOST, INCLUDING ITS GRADES!!!" %} </strong> </p>
+{% endblock %}
+
 {% block card_content %}
     <p> {{ object|verbose_name:"name" }}:  {{ object.name }} </p>
     <p> {{ object|verbose_name:"registry" }}:  {{ object.registry }} </p>
-    <p> {{ object|verbose_name:"current_class" }}:  {{ object.current_class }} </p>
 {% endblock %}

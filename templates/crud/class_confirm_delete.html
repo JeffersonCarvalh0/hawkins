@@ -6,6 +6,12 @@
 
 {% block card_title %} {% trans "Class info:" %} {% endblock %}
 
+{% block warning %}
+    {{ block.super }}
+    <p> <strong> {% trans "Notice: ALL SUBJECTS AND GRADES RELATED TO THIS CLASS WILL BE ERASED!!!" %} </strong> </p>
+    <p> <strong> {% trans "DO NOT DO THIS IF YOU WANT TO KEEP RECORD OF THE STUDENT'S GRADES IN THIS CLASS!!!" %} </strong> </p>
+{% endblock %}
+
 {% block card_content %}
     <p> {{ object|verbose_name:"name" }}: {{ object.name }} </p>
     <p> {{ object|verbose_name:"year" }}: {{ object.year }} </p>
