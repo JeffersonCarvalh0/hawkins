@@ -1,5 +1,7 @@
 cefpython3==57.0
 Django==2.0
 django-cleanup==2.1.0
+django-debug-toolbar==1.9.1
 pytz==2017.3
 six==1.11.0
+sqlparse==0.2.4
