@@ -25,7 +25,7 @@ The  application starts by running the *run.py* file.
 * [CEF Python](https://github.com/cztomczak/cefpython) - Desktop GUI
 * [Materialize](http://materializecss.com/) - Front-end framework
 * [django-cleanup](https://github.com/un1t/django-cleanup) - Automatically deletes model files
-* [Django Debug Toolbar] (https://github.com/jazzband/django-debug-toolbar) - Debug tool to help in the production
+* [Django Debug Toolbar](https://github.com/jazzband/django-debug-toolbar) - Debug tool to help in the production
 
 # License
 
