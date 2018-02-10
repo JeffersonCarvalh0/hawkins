@@ -1,0 +1,11 @@
+{% extends "form_base.html" %}
+{% load i18n %}
+
+{% block header %} {% trans "Settings" %} {% endblock %}
+
+{% block inputs %}
+    {% if field.name != 'lang' %}
+        {{ field.label_tag }}
+    {% endif %}
+    {{ field }}
+{% endblock %}

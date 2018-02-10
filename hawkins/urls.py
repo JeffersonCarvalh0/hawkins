@@ -46,5 +46,5 @@ urlpatterns += i18n_patterns(
     path('class/<int:class>/remove_student/<int:student>/', views.ClassRemoveStudent.as_view(), name='class_remove_student'),
     path('subject/register/<int:pk>/', views.SubjectRegister.as_view(), name='subject_register'),
     path('subject/delete/<int:class>/<int:pk>/', views.SubjectDelete.as_view(), name='subject_delete'),
-    path('settings/', views.settings, name='settings')
+    path('settings/', views.Settings.as_view(), {'pk' : 0}, name='settings')
 )

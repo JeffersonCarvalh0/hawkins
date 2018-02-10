@@ -19,7 +19,7 @@ def getLanguageChoices():
     choices = [''] * choices_size
 
     for i in range(choices_size):
-        choices[i] = (LANGUAGES[1], LANGUAGES[0])
+        choices[i] = (LANGUAGES[i][0], LANGUAGES[i][1])
 
     return choices
 

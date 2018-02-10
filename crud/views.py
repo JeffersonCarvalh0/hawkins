@@ -1,8 +1,9 @@
 from .forms import ClassAddStudentForm
-from .models import Student, Class, Subject, Settings, Grade
+from .models import Student, Class, Subject, Grade, Settings as hawkins_settings
 from django.forms import modelform_factory, inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
+from django.utils import translation
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
@@ -55,7 +56,9 @@ class Index(BreadcrumbMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['hawkins_settings'] = Settings.objects.get_or_create(pk=0)[0]
+        user_lang = hawkins_settings.objects.get_or_create(pk=0)[0].lang
+        translation.activate(user_lang)
+        self.request.session[translation.LANGUAGE_SESSION_KEY] = user_lang
         return context
 
 class StudentList(BreadcrumbMixin, ListView):
@@ -136,7 +139,6 @@ class ClassRemoveStudent(RedirectView):
         school_class.students.remove(student)
         return reverse('class_detail', args=[kwargs.get('class')])
 
-
 class SubjectList(BreadcrumbMixin, ListView):
     template_name = 'crud/subject_list.html'
     model = Subject
@@ -164,5 +166,15 @@ class SubjectDelete(BreadcrumbMixin, DeleteView):
     def get_success_url(self):
         return reverse('class_detail', args=[self.kwargs.get('class')])
 
-def settings(request):
-    return render(request, 'settings.html', {})
+class Settings(BreadcrumbMixin, UpdateView):
+    model = hawkins_settings
+    fields = '__all__'
+    verbose_name = _('Settings')
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        user_lang = form.cleaned_data['lang']
+        print(user_lang)
+        translation.activate(user_lang)
+        self.request.session[translation.LANGUAGE_SESSION_KEY] = user_lang
+        return super().form_valid(form)
