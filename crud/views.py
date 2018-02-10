@@ -1,5 +1,6 @@
 from .forms import ClassAddStudentForm
 from .models import Student, Class, Subject, Grade, Settings as hawkins_settings
+from .utils import total_average
 from django.forms import modelform_factory, inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
@@ -102,6 +103,38 @@ class ClassDetail(BreadcrumbMixin, DetailView):
 
     def get_queryset(self):
         return Class.objects.prefetch_related('students', 'subjects__grades').filter(pk=self.kwargs.get('pk'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = kwargs.get('object')
+
+        subjects = Subject.objects.filter(school_class=obj)
+        students = Student.objects.filter(classes=obj)
+
+        students_info = []
+        subjects_num = subjects.count()
+
+        for student in students:
+            student_average = 0
+            averages_list = []
+            for subject in subjects:
+                subject_grades = Grade.objects.filter(student=student, subject=subject)
+                subject_average = total_average(subject_grades)
+                averages_list.append(subject_average)
+                student_average += subject_average
+            student_average = 0 if student_average == 0 else student_average / subject_average
+            approved = student_average >= obj.avg
+
+            students_info.append({
+                'name' : student.name,
+                'url' : reverse('student_detail', args=[student.registry]),
+                'averages_list' : averages_list,
+                'student_average' : student_average,
+                'approved' : approved,
+            })
+
+        context['students_info'] = students_info
+        return context
 
 class ClassRegister(BreadcrumbMixin, CreateView):
     model = Class

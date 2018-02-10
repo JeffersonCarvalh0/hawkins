@@ -39,6 +39,7 @@ class Student(models.Model):
 
     class Meta:
         verbose_name = _('Student')
+        ordering = ('name',)
 
     def __str__(self):
         return '%s, %s' %(self.name, self.registry)

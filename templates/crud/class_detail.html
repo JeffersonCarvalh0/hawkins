@@ -130,13 +130,19 @@
                     </thead>
 
                     <tbody>
-                        {% for student in object.students.all %}
+                        {% for student in students_info %}
                             <tr>
-                                <td> <a href="{{ student.get_absolute_url }}"> {{ student.name }} </a> </td>
-                                {% for grade in object.subjects.grades.all %}
-                                    <td> {% total_avg grades|student:student %} </td>
+                                <td> <a href="{{ student.url }}"> {{ student.name }} </a> </td>
+                                {% for grade in student.averages_list %}
+                                    <td> {{ grade }} </td>
                                 {% endfor %}
-                                <td></td>
+                                <td>
+                                    {% if student.approved %}
+                                        <i class="material-icons"> check </i>
+                                    {% else %}
+                                        <i class="material-icons"> close </i>
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
