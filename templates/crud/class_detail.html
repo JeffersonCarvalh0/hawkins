@@ -120,12 +120,13 @@
             <div class="col s11">
                 <p> <h4> {% trans "Grades" %} </h4> </p>
 
-                <table class="centered responsive-table striped z-depth-1">
+                <table class="centered responsive-table striped">
                     <thead>
                         <th> {% trans "Name" %} </th>
                         {% for subject in object.subjects.all %}
                             <th> {{ subject.name }} </th>
                         {% endfor %}
+                        <th> {% trans "Overall" %} </th>
                         <th> {% trans "Approved" %} </th>
                     </thead>
 
@@ -136,6 +137,7 @@
                                 {% for grade in student.averages_list %}
                                     <td> {{ grade }} </td>
                                 {% endfor %}
+                                <td> {{ student.overall }} </td>
                                 <td>
                                     {% if student.approved %}
                                         <i class="material-icons"> check </i>

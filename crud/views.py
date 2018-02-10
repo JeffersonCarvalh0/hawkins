@@ -91,6 +91,9 @@ class StudentDelete(BreadcrumbMixin, DeleteView):
     success_url = reverse_lazy('student_list')
     verbose_name = _('Delete student')
 
+class AssignGrades(BreadcrumbMixin, FormView):
+    pass
+
 class ClassList(BreadcrumbMixin, ListView):
     template_name = 'crud/class_list.html'
     model = Class
@@ -115,21 +118,21 @@ class ClassDetail(BreadcrumbMixin, DetailView):
         subjects_num = subjects.count()
 
         for student in students:
-            student_average = 0
+            overall = 0
             averages_list = []
             for subject in subjects:
                 subject_grades = Grade.objects.filter(student=student, subject=subject)
                 subject_average = total_average(subject_grades)
-                averages_list.append(subject_average)
-                student_average += subject_average
-            student_average = 0 if student_average == 0 else student_average / subject_average
-            approved = student_average >= obj.avg
+                averages_list.append('%.2f' %(subject_average))
+                overall += subject_average
+            overall = 0 if overall == 0 else overall / subject_average
+            approved = overall >= obj.avg
 
             students_info.append({
                 'name' : student.name,
                 'url' : reverse('student_detail', args=[student.registry]),
                 'averages_list' : averages_list,
-                'student_average' : student_average,
+                'overall' : '%.2f' %(overall),
                 'approved' : approved,
             })
 
