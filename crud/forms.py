@@ -7,7 +7,8 @@ class ClassAddStudentForm(forms.ModelForm):
         queryset = Student.objects.all(),
         required = False
     )
-    
+
     class Meta:
         model = Class
         fields = ('students',)
+        localized_fields = ('students',)

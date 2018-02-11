@@ -1,7 +1,7 @@
 from .forms import ClassAddStudentForm
 from .models import Student, Class, Subject, Grade, Settings as hawkins_settings
 from .utils import total_average
-from django.forms import modelform_factory, inlineformset_factory
+from django.forms import modelform_factory, modelformset_factory
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils import translation
@@ -91,8 +91,17 @@ class StudentDelete(BreadcrumbMixin, DeleteView):
     success_url = reverse_lazy('student_list')
     verbose_name = _('Delete student')
 
-class AssignGrades(BreadcrumbMixin, FormView):
-    pass
+class EditGrades(BreadcrumbMixin, FormView):
+    template_name = 'crud/grades_form.html'
+    verbose_name = _('Edit grades')
+
+    def get_form_class(self):
+        form_num = Grade.objects.filter(student=self.kwargs.get('pk')).count()
+        print(form_num)
+        return modelformset_factory(Grade, fields=('value',), localized_fields=('value',))
+
+    def get_success_url(self):
+        return reverse('student_detail', args=[self.kwargs.get('pk')])
 
 class ClassList(BreadcrumbMixin, ListView):
     template_name = 'crud/class_list.html'
