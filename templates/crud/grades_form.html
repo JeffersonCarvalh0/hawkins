@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
-    {{ form.as_p }}
+    {% for f in form %}
+        {{ f.as_p }}
+    {% endfor %}
 {% endblock %}

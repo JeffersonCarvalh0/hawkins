@@ -77,12 +77,12 @@
                 {% if object.classes.exists %}
                     <ul class="tabs">
                         {% for class in object.classes.all %}
-                            <li class="tab col s2"> <a href="#swipe-{{ forloop.counter }}"> {{ class.name }} </a> </li>
+                            <li class="tab col s2"> <a href="{{ class.id }}" id="class"> {{ class.name }} </a> </li>
                         {% endfor %}
                     </ul>
 
                     {% for class in object.classes.all %}
-                        <div class="col s12" id="swipe-{{ forloop.counter }}" style="height: auto">
+                        <div class="col s12" id="{{ class.id }}" style="height: auto">
                             <table class="centered responsive-table striped">
                                 <thead>
                                     <th> {% trans "Subject" %} </th>
@@ -129,7 +129,7 @@
             </div>
         </div>
         <div class="right-align">
-            <a href="{% url 'edit_grades' object.registry %}" class="waves-effect waves-light btn deep-orange darken-2"> <i class="material-icons left"> edit </i> {% trans "Edit grades" %} </a>
+            <a id="edit_grades" class="waves-effect waves-light btn deep-orange darken-2"> <i class="material-icons left"> edit </i> {% trans "Edit grades" %} </a>
         </div>
     </div>
 
@@ -152,5 +152,14 @@
                 responsiveThreshold : 2000
             });
         });
+    </script>
+
+    <script type="text/javascript">
+        document.getElementById('edit_grades').onclick = function() {
+            var school_class = document.getElementById('class').href.split('/');
+            school_class = school_class[school_class.length - 1];
+            var url = "/student/" + {{ object.registry }} + "/edit_grades/" + school_class;
+            window.location.href = url;
+        }
     </script>
 {% endblock %}

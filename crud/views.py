@@ -2,7 +2,6 @@ from .forms import ClassAddStudentForm
 from .models import Student, Class, Subject, Grade, Settings as hawkins_settings
 from .utils import total_average
 from django.forms import modelform_factory, modelformset_factory
-from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils import translation
 from django.utils.translation import ugettext as _
@@ -10,7 +9,7 @@ from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 
@@ -91,9 +90,11 @@ class StudentDelete(BreadcrumbMixin, DeleteView):
     success_url = reverse_lazy('student_list')
     verbose_name = _('Delete student')
 
-class EditGrades(BreadcrumbMixin, FormView):
+class EditGrades(BreadcrumbMixin, UpdateView):
     template_name = 'crud/grades_form.html'
     verbose_name = _('Edit grades')
+    model = Grade
+    args_names = ['class', 'pk']
 
     def get_form_class(self):
         form_num = Grade.objects.filter(student=self.kwargs.get('pk')).count()
