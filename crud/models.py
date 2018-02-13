@@ -54,7 +54,7 @@ class Subject(models.Model):
         but it may vary depending on the school.
     '''
     name = models.CharField(_('Name'), max_length=255)
-    school_class = models.ForeignKey('Class', on_delete=models.CASCADE, verbose_name=_('Class'), related_name='subjects')
+    school_class = models.ForeignKey('SchoolClass', on_delete=models.CASCADE, verbose_name=_('Class'), related_name='subjects')
 
     class Meta:
         # Translators: School's subject
@@ -93,7 +93,7 @@ class Grade(models.Model):
         return '[%s], [%s], [%.2f]' %(self.student, self.subject, self.value or 0)
 
 
-class Class(models.Model):
+class SchoolClass(models.Model):
     name = models.CharField(_('Name'), max_length=5)
     year = models.SmallIntegerField(_('Year'), default=date.today().year)
     students = models.ManyToManyField('Student', verbose_name=_('Students'), related_name='classes')

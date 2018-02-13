@@ -1,8 +1,8 @@
-from .models import Class, Grade, Student
+from .models import SchoolClass, Grade, Student
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 
-@receiver(m2m_changed, sender=Class.students.through, dispatch_uid='students_add')
+@receiver(m2m_changed, sender=SchoolClass.students.through, dispatch_uid='students_add')
 def students_add(sender, **kwargs):
     if kwargs.get('action') == 'post_add':
         instance = kwargs.get('instance')

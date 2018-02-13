@@ -1,10 +1,11 @@
 from .forms import ClassAddStudentForm
-from .models import Student, Class, Subject, Grade, Settings as hawkins_settings
+from .models import Student, SchoolClass, Subject, Grade, Settings as hawkins_settings
 from .utils import total_average
 from django.forms import modelform_factory, modelformset_factory
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils import translation
 from django.utils.translation import ugettext as _
+from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.views.generic.list import ListView
@@ -90,32 +91,37 @@ class StudentDelete(BreadcrumbMixin, DeleteView):
     success_url = reverse_lazy('student_list')
     verbose_name = _('Delete student')
 
-class EditGrades(BreadcrumbMixin, UpdateView):
+class EditGrades(BreadcrumbMixin, View):
     template_name = 'crud/grades_form.html'
-    verbose_name = _('Edit grades')
     model = Grade
     args_names = ['class', 'pk']
+    verbose_name = _('Edit grades')
+
+    # def post(self, request, *args, **kwargs):
+    #     student = kwargs.get('pk')
+    #     SchoolClass = kwargs.get('class')
+    #     formset = modelformset_factory(model, queryset=model.objects.filter(student=))
 
     def get_form_class(self):
         form_num = Grade.objects.filter(student=self.kwargs.get('pk')).count()
         print(form_num)
-        return modelformset_factory(Grade, fields=('value',), localized_fields=('value',))
+        return modelformset_factory(Grade, fields=('value',))
 
     def get_success_url(self):
         return reverse('student_detail', args=[self.kwargs.get('pk')])
 
 class ClassList(BreadcrumbMixin, ListView):
     template_name = 'crud/class_list.html'
-    model = Class
+    model = SchoolClass
     verbose_name = _('Classes')
 
 class ClassDetail(BreadcrumbMixin, DetailView):
     template_name = 'crud/class_detail.html'
-    model = Class
+    model = SchoolClass
     verbose_name = _('View class')
 
     def get_queryset(self):
-        return Class.objects.prefetch_related('students', 'subjects__grades').filter(pk=self.kwargs.get('pk'))
+        return SchoolClass.objects.prefetch_related('students', 'subjects__grades').filter(pk=self.kwargs.get('pk'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -150,25 +156,25 @@ class ClassDetail(BreadcrumbMixin, DetailView):
         return context
 
 class ClassRegister(BreadcrumbMixin, CreateView):
-    model = Class
-    form_class = modelform_factory(Class, exclude=('students',))
+    model = SchoolClass
+    form_class = modelform_factory(SchoolClass, exclude=('students',))
     verbose_name = _('Register new class')
 
 class ClassUpdate(BreadcrumbMixin, UpdateView):
-    model = Class
-    form_class = modelform_factory(Class, exclude=('students',))
+    model = SchoolClass
+    form_class = modelform_factory(SchoolClass, exclude=('students',))
     verbose_name = _('Update class')
 
 class ClassDelete(BreadcrumbMixin, DeleteView):
-    model = Class
+    model = SchoolClass
     success_url = reverse_lazy('class_list')
     verbose_name = _('Delete class')
 
     def get_queryset(self):
-        return Class.objects.prefetch_related('subjects')
+        return SchoolClass.objects.prefetch_related('subjects')
 
 class ClassAddStudent(BreadcrumbMixin, UpdateView):
-    model = Class
+    model = SchoolClass
     template_name = 'crud/class_add_student.html'
     form_class = ClassAddStudentForm
     verbose_name = _('Add students to class')
@@ -180,7 +186,7 @@ class ClassAddStudent(BreadcrumbMixin, UpdateView):
 
 class ClassRemoveStudent(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-        school_class = Class.objects.get(pk=kwargs.get('class'))
+        school_class = SchoolClass.objects.get(pk=kwargs.get('class'))
         student = Student.objects.get(pk=kwargs.get('student'))
         school_class.students.remove(student)
         return reverse('class_detail', args=[kwargs.get('class')])

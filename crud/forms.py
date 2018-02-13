@@ -1,4 +1,4 @@
-from .models import Class, Student
+from .models import SchoolClass, Student, Grade
 from django import forms
 
 class ClassAddStudentForm(forms.ModelForm):
@@ -9,6 +9,6 @@ class ClassAddStudentForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Class
+        model = SchoolClass
         fields = ('students',)
         localized_fields = ('students',)
