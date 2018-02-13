@@ -2,6 +2,7 @@ from .forms import ClassAddStudentForm
 from .models import Student, SchoolClass, Subject, Grade, Settings as hawkins_settings
 from .utils import total_average
 from django.forms import modelform_factory, modelformset_factory
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils import translation
 from django.utils.translation import ugettext as _
@@ -93,22 +94,28 @@ class StudentDelete(BreadcrumbMixin, DeleteView):
 
 class EditGrades(BreadcrumbMixin, View):
     template_name = 'crud/grades_form.html'
-    model = Grade
     args_names = ['class', 'pk']
     verbose_name = _('Edit grades')
+    context = {}
 
-    # def post(self, request, *args, **kwargs):
-    #     student = kwargs.get('pk')
-    #     SchoolClass = kwargs.get('class')
-    #     formset = modelformset_factory(model, queryset=model.objects.filter(student=))
+    def get(self, request, *args, **kwargs):
+        # Getting the objects
+        student = Student.objects.get(registry=kwargs.get('pk'))
+        SchoolClass = SchoolClass.objects.get(pk=kwargs.get('class'))
 
-    def get_form_class(self):
-        form_num = Grade.objects.filter(student=self.kwargs.get('pk')).count()
-        print(form_num)
-        return modelformset_factory(Grade, fields=('value',))
+        # Getting the querysets
+        subjects = Subject.objects.filter(school_class=SchoolClass, student=student)
+        context['subjects'] = subjects
+        formsets = {}
+        for subject in subjects:
+            subject_grades = Grade.objects.filter(subject=subject)
+            formsets[subject.id] = modelformset_factory(Grade, queryset=subject_grades, prefix=subject.id)
 
-    def get_success_url(self):
-        return reverse('student_detail', args=[self.kwargs.get('pk')])
+        context['formsets'] = formsets
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        pass
 
 class ClassList(BreadcrumbMixin, ListView):
     template_name = 'crud/class_list.html'
