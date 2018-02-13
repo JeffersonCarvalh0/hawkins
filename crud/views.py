@@ -2,13 +2,14 @@ from .forms import ClassAddStudentForm
 from .models import Student, SchoolClass, Subject, Grade, Settings as hawkins_settings
 from .utils import total_average
 from django.forms import modelform_factory, modelformset_factory
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils import translation
 from django.utils.translation import ugettext as _
 from django.views import View
 from django.views.generic import TemplateView
-from django.views.generic.base import RedirectView
+from django.views.generic.base import RedirectView, ContextMixin
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -92,30 +93,41 @@ class StudentDelete(BreadcrumbMixin, DeleteView):
     success_url = reverse_lazy('student_list')
     verbose_name = _('Delete student')
 
-class EditGrades(BreadcrumbMixin, View):
+class EditGrades(BreadcrumbMixin, ContextMixin, View):
     template_name = 'crud/grades_form.html'
     args_names = ['class', 'pk']
+    GradesFormset = modelformset_factory(Grade, fields=('value',))
     verbose_name = _('Edit grades')
-    context = {}
+
+    def get_subjects(self, **kwargs):
+        school_class = SchoolClass.objects.get(pk=kwargs.get('class'))
+        subjects = Subject.objects.filter(school_class=school_class)
+        return subjects
 
     def get(self, request, *args, **kwargs):
-        # Getting the objects
-        student = Student.objects.get(registry=kwargs.get('pk'))
-        SchoolClass = SchoolClass.objects.get(pk=kwargs.get('class'))
+        context = super().get_context_data(**kwargs)
 
-        # Getting the querysets
-        subjects = Subject.objects.filter(school_class=SchoolClass, student=student)
+        subjects = self.get_subjects(**kwargs)
+        student = Student.objects.get(registry=kwargs.get('pk'))
         context['subjects'] = subjects
+
         formsets = {}
         for subject in subjects:
-            subject_grades = Grade.objects.filter(subject=subject)
-            formsets[subject.id] = modelformset_factory(Grade, queryset=subject_grades, prefix=subject.id)
+            subject_grades = Grade.objects.filter(subject=subject, student=student)
+            formsets[subject.id] = self.GradesFormset(queryset=subject_grades, prefix=subject.id)
 
         context['formsets'] = formsets
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        pass
+        subjects = self.get_subjects(**kwargs)
+
+        for subject in subjects:
+            formset = self.GradesFormset(request.POST, prefix=subject.id)
+            if formset.is_valid():
+                formset.save()
+                return HttpResponseRedirect(reverse('student_detail', args=[kwargs.get('class')]))
+
 
 class ClassList(BreadcrumbMixin, ListView):
     template_name = 'crud/class_list.html'
