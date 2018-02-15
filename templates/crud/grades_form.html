@@ -1,7 +1,41 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load crud_extras %}
 
 {% block body %}
-    {% for f in form %}
-        {{ f.as_p }}
-    {% endfor %}
+    <h4> {% trans "Edit grades" %} </h4>
+    <h5> {% trans "Editing grades for student " %} {{ student.name }}({{ student.registry }}), {{ school_class.name }} </h5>
+
+    <br>
+
+    <table class="centered">
+        <thead>
+            <th> {% trans "Subject" %} </th>
+            {% for i in class.regular_grades_num|times %}
+                {# Translators: Abbreviation for grade #}
+                <th> {% trans "G" %}{{ i }} </th>
+            {% endfor %}
+            {% for i in class.retake_grades_num|times %}
+                {# Translators: Abbreviation for retake #}
+                <th> {% trans "R" %}{{ i }} </th>
+            {% endfor %}
+        </thead>
+        <tbody>
+            {% for subject in subjects %}
+                <tr>
+                    <td> {{ subject.name }} </td>
+                    {% for form in formsets|get_item:subject.id %}
+                        {% for field in form %}
+                            {% if field.is_hidden %}
+                                {{ field }}
+                            {% else %}
+                                <td> {{ field }} </td>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}

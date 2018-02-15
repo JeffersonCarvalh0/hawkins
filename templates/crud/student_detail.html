@@ -87,10 +87,12 @@
                                 <thead>
                                     <th> {% trans "Subject" %} </th>
                                     {% for i in class.regular_grades_num|times %}
-                                        <th> N{{ i }} </th>
+                                        {# Translators: Abbreviation for grade #}
+                                        <th> {% trans "G" %}{{ i }} </th>
                                     {% endfor %}
                                     {% for i in class.retake_grades_num|times %}
-                                        <th> R{{ i }} </th>
+                                        {# Translators: Abbreviation for retake #}
+                                        <th> {% trans "R" %}{{ i }} </th>
                                     {% endfor %}
                                     <th> {% trans "Partial" %} </th>
                                     <th> {% trans "Total" %} </th>
