@@ -4,38 +4,97 @@
 
 {% block body %}
     <h4> {% trans "Edit grades" %} </h4>
-    <h5> {% trans "Editing grades for student " %} {{ student.name }}({{ student.registry }}), {{ school_class.name }} </h5>
+
+    <div class="divider"></div>
+
+    <div class="section">
+        <div class="row">
+            <div class="col s1">
+                <i class="material-icons medium"> account_circle </i>
+            </div>
+            <div class="col s3">
+                <p> <h4> {% trans "Student:" %} </h4> </p>
+                    {{ student.name }}
+            </div>
+
+            <div class="col s1">
+                <i class="material-icons medium"> local_offer </i>
+            </div>
+            <div class="col s3">
+                <p> <h4> {% trans "Registry:" %} </h4> </p>
+                    {{ student.registry }}
+            </div>
+
+            <div class="col s1">
+                <i class="material-icons medium"> class </i>
+            </div>
+            <div class="col s3">
+                <p> <h4> {% trans "Class:" %} </h4> </p>
+                    {{ class.name }}
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
 
     <br>
 
-    <table class="centered">
-        <thead>
-            <th> {% trans "Subject" %} </th>
-            {% for i in class.regular_grades_num|times %}
-                {# Translators: Abbreviation for grade #}
-                <th> {% trans "G" %}{{ i }} </th>
-            {% endfor %}
-            {% for i in class.retake_grades_num|times %}
-                {# Translators: Abbreviation for retake #}
-                <th> {% trans "R" %}{{ i }} </th>
-            {% endfor %}
-        </thead>
-        <tbody>
-            {% for subject in subjects %}
-                <tr>
-                    <td> {{ subject.name }} </td>
-                    {% for form in formsets|get_item:subject.id %}
-                        {% for field in form %}
-                            {% if field.is_hidden %}
-                                {{ field }}
-                            {% else %}
-                                <td> {{ field }} </td>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="section">
+        <div class="row">
+            <div class="col s1">
+                <i class="material-icons medium"> insert_chart </i>
+            </div>
+
+            <div class="col s11">
+                <p> <h4> {% trans "Grades:" %} </h4> </p>
+            </div>
+        </div>
+    </div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="card-panel teal lighten-2">
+            {% trans "If a grade hasn't been given yet, just leave the field in blank rather than putting a zero." %}
+        </div>
+        <table class="centered bordered z-depth-2">
+            <thead>
+                <th> {% trans "Subject" %} </th>
+                {% for i in class.regular_grades_num|times %}
+                    {# Translators: Abbreviation for grade #}
+                    <th> {% trans "G" %}{{ i }} </th>
+                {% endfor %}
+                {% for i in class.retake_grades_num|times %}
+                    {# Translators: Abbreviation for retake #}
+                    <th> {% trans "R" %}{{ i }} </th>
+                {% endfor %}
+            </thead>
+            <tbody>
+                {% for subject in subjects %}
+                    <tr>
+                        <td> {{ subject.name }} </td>
+                        {% with formset=formsets|get_item:subject.id %}
+                        {{ formset.management_form }}
+                            {% for form in formset %}
+                                {% for field in form %}
+                                    {% if field.is_hidden %}
+                                        {{ field }}
+                                    {% else %}
+                                        <td> {{ field }} </td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endwith %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br><br>
+        <div class="right-align">
+            <a href="{% back %}" class="waves-effect waves-light btn grey"> <i class="material-icons left"> chevron_left </i> {% trans "Back" %} </a>
+            <button type="submit" class="waves-effect waves-light btn" value="Submit"> <i class="material-icons right"> save </i> {% trans "Save" %} </button>
+        </div>
+    </form>
+    <br><br>
 
 {% endblock %}

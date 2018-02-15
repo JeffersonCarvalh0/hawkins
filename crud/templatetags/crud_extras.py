@@ -53,6 +53,13 @@ def addcss(field, css):
     return field.as_widget(attrs={"class":css})
 
 @register.filter
+def addstyle(field, code):
+    '''
+        Adds css code into a django rendered html tag
+    '''
+    return field.as_widget(attrs={"style":code})
+
+@register.filter
 def verbose_name(model, field):
     '''
         Returns the verbose name from a model field
@@ -65,3 +72,10 @@ def times(number):
         Range funtionality for the template
     '''
     return range(1, int(number) + 1)
+
+@register.filter
+def get_item(dictionary, key):
+    '''
+        Allows to access dictionaries using expressions as keys in the template
+    '''
+    return dictionary.get(key)

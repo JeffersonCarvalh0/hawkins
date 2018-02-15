@@ -95,8 +95,8 @@ class StudentDelete(BreadcrumbMixin, DeleteView):
 
 class EditGrades(BreadcrumbMixin, ContextMixin, View):
     template_name = 'crud/grades_form.html'
-    args_names = ['class', 'pk']
-    GradesFormset = modelformset_factory(Grade, fields=('value',))
+    args_names = ['pk', 'class']
+    GradesFormset = modelformset_factory(Grade, fields=('value',), extra=0)
     verbose_name = _('Edit grades')
 
     def get_subjects(self, **kwargs):
@@ -117,6 +117,8 @@ class EditGrades(BreadcrumbMixin, ContextMixin, View):
             formsets[subject.id] = self.GradesFormset(queryset=subject_grades, prefix=subject.id)
 
         context['formsets'] = formsets
+        context['student'] = student
+        context['class'] = SchoolClass.objects.get(pk=kwargs.get('class'))
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -126,16 +128,16 @@ class EditGrades(BreadcrumbMixin, ContextMixin, View):
             formset = self.GradesFormset(request.POST, prefix=subject.id)
             if formset.is_valid():
                 formset.save()
-                return HttpResponseRedirect(reverse('student_detail', args=[kwargs.get('class')]))
+                return HttpResponseRedirect(reverse('student_detail', args=[kwargs.get('pk')]))
 
 
 class ClassList(BreadcrumbMixin, ListView):
-    template_name = 'crud/class_list.html'
+    template_name = 'crud/schoolclass_list.html'
     model = SchoolClass
     verbose_name = _('Classes')
 
 class ClassDetail(BreadcrumbMixin, DetailView):
-    template_name = 'crud/class_detail.html'
+    template_name = 'crud/schoolclass_detail.html'
     model = SchoolClass
     verbose_name = _('View class')
 
@@ -160,7 +162,7 @@ class ClassDetail(BreadcrumbMixin, DetailView):
                 subject_average = total_average(subject_grades)
                 averages_list.append('%.2f' %(subject_average))
                 overall += subject_average
-            overall = 0 if overall == 0 else overall / subject_average
+            overall /= subjects.count()
             approved = overall >= obj.avg
 
             students_info.append({
