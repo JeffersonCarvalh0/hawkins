@@ -181,9 +181,14 @@ class ClassRegister(BreadcrumbMixin, CreateView):
     form_class = modelform_factory(SchoolClass, exclude=('students',))
     verbose_name = _('Register new class')
 
+class ClassRegisterFromExisting(CreateView):
+    pass
+    # model = SchoolClass
+    # form_class =
+
 class ClassUpdate(BreadcrumbMixin, UpdateView):
     model = SchoolClass
-    form_class = modelform_factory(SchoolClass, exclude=('students',))
+    form_class = modelform_factory(SchoolClass, fields=('name', 'year'))
     verbose_name = _('Update class')
 
 class ClassDelete(BreadcrumbMixin, DeleteView):
