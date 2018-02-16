@@ -6,23 +6,23 @@
 {% block sub_header %} {% trans "Insert information about the student here." %} {% endblock %}
 
 {% block inputs %}
-        {% if field.label == 'Full name' %}
+        {% if field.name == 'name' %}
             <i class="material-icons prefix"> account_circle </i>
         {% endif %}
 
-        {% if field.label == 'Telephone number' %}
+        {% if field.name == 'phone' %}
             <i class="material-icons prefix"> phone </i>
         {% endif %}
 
-        {% if field.label == 'Registry' %}
+        {% if field.name == 'registry' %}
             <i class="material-icons prefix"> local_offer </i>
         {% endif %}
 
-        {% if field.label == 'Birth date' %}
+        {% if field.name == 'birth' %}
             <i class="material-icons prefix"> child_care </i>
         {% endif %}
 
-        {% if field.label == 'ID Document' %}
+        {% if field.name == 'document' %}
             <div class="file-field input-field">
                 <div class="btn">
                     <span> {% trans "File" %} </span>
@@ -34,13 +34,13 @@
             </div>
         {% endif %}
 
-        {% if field.label != "ID Document" %}
+        {% if field.name != "document" %}
             {{ field.label_tag }}
         {% endif %}
 
-        {% if field.label == "Birth date" %}
+        {% if field.name == "birth" %}
             {{ field|addcss:"datepicker" }}
-        {% elif field.label != "ID Document" %}
+        {% elif field.name != "document" %}
             {{ field }}
         {% endif %}
 {% endblock %}
