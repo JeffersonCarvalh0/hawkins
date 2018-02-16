@@ -12,3 +12,8 @@ class ClassAddStudentForm(forms.ModelForm):
         model = SchoolClass
         fields = ('students',)
         localized_fields = ('students',)
+
+class ClassRegisterFromExisting(forms.ModelForm):
+    class Meta:
+        model = SchoolClass
+        exclude = ('students',)

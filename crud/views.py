@@ -181,12 +181,10 @@ class ClassRegister(BreadcrumbMixin, CreateView):
     form_class = modelform_factory(SchoolClass, exclude=('students',))
     verbose_name = _('Register new class')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['classes'] = SchoolClass.objects.prefetch_related('subjects', 'students')
-
-class ClassRegisterFromExisting(TemplateView):
+class ClassRegisterFromExisting(CreateView):
     pass
+    # model = SchoolClass
+    # form_class =
 
 class ClassUpdate(BreadcrumbMixin, UpdateView):
     model = SchoolClass
