@@ -1,6 +1,7 @@
-from .forms import ClassAddStudentForm
+from .forms import ClassAddStudentForm, CreateClassFromExistingForm
 from .models import Student, SchoolClass, Subject, Grade, Settings as hawkins_settings
 from .utils import total_average
+from django import forms
 from django.forms import modelform_factory, modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -182,9 +183,20 @@ class ClassRegister(BreadcrumbMixin, CreateView):
     verbose_name = _('Register new class')
 
 class ClassRegisterFromExisting(CreateView):
-    pass
-    # model = SchoolClass
-    # form_class =
+    model = SchoolClass
+    form_class = CreateClassFromExistingForm
+    template_name_suffix = '_fromexisting_form'
+    verbose_name = _('Create new class from an existing one')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['class'] = SchoolClass.objects.get(pk=self.kwargs.get('pk'))
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['school_class'] = SchoolClass.objects.prefetch_related('students', 'subjects').get(pk=self.kwargs.get('pk'))
+        return kwargs
 
 class ClassUpdate(BreadcrumbMixin, UpdateView):
     model = SchoolClass
