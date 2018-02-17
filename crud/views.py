@@ -182,7 +182,7 @@ class ClassRegister(BreadcrumbMixin, CreateView):
     form_class = modelform_factory(SchoolClass, exclude=('students',))
     verbose_name = _('Register new class')
 
-class ClassRegisterFromExisting(CreateView):
+class ClassRegisterFromExisting(BreadcrumbMixin, CreateView):
     model = SchoolClass
     form_class = CreateClassFromExistingForm
     template_name_suffix = '_fromexisting_form'
