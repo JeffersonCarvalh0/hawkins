@@ -156,10 +156,11 @@
             });
         });
 
+        var button = document.getElementById('edit_grades');
+        var url = "/student/" + {{ object.registry }} + "/edit_grades/";
         function change_href(cur_tab) {
             var school_class = cur_tab[0].id;
-            var url = "/student/" + {{ object.registry }} + "/edit_grades/" + school_class;
-            button = document.getElementById('edit_grades').href = url
+            button.href = url + school_class;
         }
     </script>
 
