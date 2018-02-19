@@ -79,3 +79,7 @@ def get_item(dictionary, key):
         Allows to access dictionaries using expressions as keys in the template
     '''
     return dictionary.get(key)
+
+@register.filter
+def greater_than(lhs, rhs):
+    return float(lhs) > float(rhs)
