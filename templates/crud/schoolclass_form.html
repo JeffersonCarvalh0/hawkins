@@ -4,15 +4,39 @@
 {% block header %} {% trans "New class" %} {% endblock %}
 {% block sub_header %} {% trans "Insert information about the class here." %} {% endblock %}
 
-{% block inputs %}
-    {% if field.name == 'name' %}
+{% block fields_loop %}
+    <div class="input-field">
         <i class="material-icons prefix"> class </i>
-    {% endif %}
+        {{ form.name.errors }}
+        {{ form.name.label_tag }}
+        {{ form.name }}
+    </div>
 
-    {% if field.name == 'year' %}
+    <div class="input-field">
         <i class="material-icons prefix"> today </i>
-    {% endif %}
+        {{ form.name.errors }}
+        {{ form.year.label_tag }}
+        {{ form.year }}
+    </div>
 
-    {{ field.label_tag }}
-    {{ field }}
+    <div class="row">
+        <div class="input-field col s4">
+            {{ form.regular_grades_num.errors }}
+            {{ form.regular_grades_num.label_tag }}
+            {{ form.regular_grades_num }}
+        </div>
+
+        <div class="input-field col s4">
+            {{ form.retake_grades_num.errors }}
+            {{ form.retake_grades_num.label_tag }}
+            {{ form.retake_grades_num }}
+        </div>
+
+        <div class="input-field col s4">
+            {{ form.avg.errors }}
+            {{ form.avg.label_tag }}
+            {{ form.avg }}
+        </div>
+    </div>
+
 {% endblock %}

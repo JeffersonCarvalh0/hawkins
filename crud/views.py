@@ -198,6 +198,12 @@ class ClassRegisterFromExisting(BreadcrumbMixin, CreateView):
         kwargs['school_class'] = SchoolClass.objects.prefetch_related('students', 'subjects').get(pk=self.kwargs.get('pk'))
         return kwargs
 
+    def form_valid(self, form):
+        self.object = form.save()
+        for subject in form.cleaned_data['subjects']:
+            Subject.objects.create(name=subject.name, school_class=self.object)
+        return HttpResponseRedirect(self.get_success_url())
+
 class ClassUpdate(BreadcrumbMixin, UpdateView):
     model = SchoolClass
     form_class = modelform_factory(SchoolClass, fields=('name', 'year'))
@@ -213,7 +219,7 @@ class ClassDelete(BreadcrumbMixin, DeleteView):
 
 class ClassAddStudent(BreadcrumbMixin, UpdateView):
     model = SchoolClass
-    template_name = 'crud/class_add_student.html'
+    template_name = 'crud/schoolclass_add_student.html'
     form_class = ClassAddStudentForm
     verbose_name = _('Add students to class')
 

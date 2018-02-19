@@ -2,7 +2,7 @@ from datetime import date
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, get_language
-from .utils import documentPath, getLanguageChoices
+from .utils import documentPath, getLanguageChoices, total_average
 
 # Create your models here.
 
@@ -111,3 +111,23 @@ class SchoolClass(models.Model):
 
     def get_absolute_url(self):
         return reverse('class_detail', args=[self.id])
+
+    def approved_students(self):
+        approved = []
+
+        for student in self.students.all():
+            grades = Grade.objects.none()
+            for subject in self.subjects.all():
+                grades = grades | Grade.objects.filter(student=student, subject=subject)
+
+            overall = total_average(grades)
+            if overall >= self.avg:
+                approved.append(student)
+
+        return approved
+
+'''
+from crud.models import SchoolClass
+sc = SchoolClass.objects.all()[0]
+sc.approved_students()
+'''
