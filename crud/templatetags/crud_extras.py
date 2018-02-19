@@ -81,5 +81,5 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 @register.filter
-def greater_than(lhs, rhs):
-    return float(lhs) > float(rhs)
+def greater_or_equal(lhs, rhs):
+    return float(lhs) >= float(rhs)

@@ -110,7 +110,7 @@
                                             {% total_avg subject.grades|student:object as total %}
                                             <td> {{ total }} </td>
                                             <td>
-                                                {% if total|greater_than:class.avg %}
+                                                {% if total|greater_or_equal:class.avg %}
                                                     <i class="material-icons"> check </i>
                                                 {% else %}
                                                     <i class="material-icons"> close </i>
