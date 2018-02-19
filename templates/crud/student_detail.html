@@ -151,17 +151,16 @@
         $(document).ready(function(){
             $('ul.tabs').tabs({
                 swipeable : true,
-                responsiveThreshold : 2000
+                responsiveThreshold : 2000,
+                onShow : change_href
             });
         });
-    </script>
 
-    <script type="text/javascript">
-        document.getElementById('edit_grades').onclick = function() {
-            var school_class = document.getElementById('class').href.split('/');
-            school_class = school_class[school_class.length - 1];
+        function change_href(cur_tab) {
+            var school_class = cur_tab[0].id;
             var url = "/student/" + {{ object.registry }} + "/edit_grades/" + school_class;
-            window.location.href = url;
+            button = document.getElementById('edit_grades').href = url
         }
     </script>
+
 {% endblock %}
