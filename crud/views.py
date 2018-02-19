@@ -129,7 +129,7 @@ class EditGrades(BreadcrumbMixin, ContextMixin, View):
             formset = self.GradesFormset(request.POST, prefix=subject.id)
             if formset.is_valid():
                 formset.save()
-                return HttpResponseRedirect(reverse('student_detail', args=[kwargs.get('pk')]))
+        return HttpResponseRedirect(reverse('student_detail', args=[kwargs.get('pk')]))
 
 
 class ClassList(BreadcrumbMixin, ListView):
