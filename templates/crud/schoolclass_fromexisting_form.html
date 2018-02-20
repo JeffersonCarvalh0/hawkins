@@ -67,14 +67,14 @@
         }, false);
 
         var students_approved_checkbox = document.getElementById('students_approved');
-        var students_approved_list = {{ class.approved_students }}
+        var students_approved_list = {{ class.approved_students|safe }}
         students_approved_checkbox.addEventListener('change', students_checkbox_script, false);
 
         function students_checkbox_script() {
             for (var i = 0; i < {{ form.students.field.choices|length }}; ++i) {
                 cur_checkbox = document.getElementById('id_students_' + i.toString());
                 for (var j = 0; j < students_approved_list.length; ++j) {
-                    if (students_appoved_list[j].name === cur_checkbox.value)
+                    if (students_approved_list[j] === cur_checkbox.value)
                         cur_checkbox.checked = students_approved_checkbox.checked;
                 }
             }

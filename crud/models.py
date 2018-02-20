@@ -1,4 +1,5 @@
 from datetime import date
+from django.core import serializers
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, get_language
@@ -112,7 +113,7 @@ class SchoolClass(models.Model):
     def get_absolute_url(self):
         return reverse('class_detail', args=[self.id])
 
-    def approved_students(self):
+    def approved_students(self, pk_only=True):
         approved = []
 
         for student in self.students.all():
@@ -124,10 +125,6 @@ class SchoolClass(models.Model):
             if overall >= self.avg:
                 approved.append(student)
 
+        if pk_only:
+            return [student.pk for student in approved]
         return approved
-
-'''
-from crud.models import SchoolClass
-sc = SchoolClass.objects.all()[0]
-sc.approved_students()
-'''
