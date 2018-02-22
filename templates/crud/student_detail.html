@@ -58,7 +58,7 @@
             </div>
             <div class="col s11">
                 <p> <h4> {{ object|verbose_name:"document" }} </h4> </p>
-                    {{ object.document }}
+                    <img src="{{ object.document.url }}" alt="">
             </div>
         </div>
     </div>

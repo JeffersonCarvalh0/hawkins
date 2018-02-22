@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import include, path
 from django.conf import settings
+from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 import crud.views as views
 
@@ -48,5 +49,5 @@ urlpatterns += i18n_patterns(
     path('class/<int:class>/remove_student/<int:student>/', views.ClassRemoveStudent.as_view(), name='class_remove_student'),
     path('subject/register/<int:pk>/', views.SubjectRegister.as_view(), name='subject_register'),
     path('subject/delete/<int:class>/<int:pk>/', views.SubjectDelete.as_view(), name='subject_delete'),
-    path('settings/', views.Settings.as_view(), {'pk' : 0}, name='settings')
-)
+    path('settings/', views.Settings.as_view(), {'pk' : 0}, name='settings'),
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
