@@ -1,8 +1,8 @@
 from .forms import ClassAddStudentForm, CreateClassFromExistingForm
-from .models import Student, SchoolClass, Subject, Grade, Settings as hawkins_settings
+from .models import Student, SchoolClass, SchoolClassStudent, Subject, Grade, Settings as hawkins_settings
 from .utils import total_average
 from django import forms
-from django.forms import modelform_factory, modelformset_factory
+from django.forms import modelform_factory, modelformset_factory, formset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy, resolve
@@ -217,22 +217,39 @@ class ClassDelete(BreadcrumbMixin, DeleteView):
     def get_queryset(self):
         return SchoolClass.objects.prefetch_related('subjects')
 
-class ClassAddStudent(BreadcrumbMixin, UpdateView):
-    model = SchoolClass
+class ClassAddStudent(BreadcrumbMixin, ContextMixin, View):
     template_name = 'crud/schoolclass_add_student.html'
-    form_class = ClassAddStudentForm
     verbose_name = _('Add students to class')
 
-    def get_context_data(self, **kwargs):
+    def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['defaults'] = [student for student in self.object.students.all().values_list('registry', flat=True)]
-        return context
+        school_class = SchoolClass.objects.get(pk=kwargs.get('pk'))
+        students = Student.objects.all()
+
+        context['defaults'] = [student for student in school_class.students.all().values_list('registry', flat=True)]
+        forms = {}
+
+        for student in students:
+            forms[student.pk] = ClassAddStudentForm(student_instance=student)
+
+        context['forms'] = forms
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        forms = context['forms']
+
+        for form in forms:
+            if forms[form].is_valid() and forms[form].cleaned_data['student']:
+                SchoolClassStudent.objects.create(student__pk=form, school_class=kwargs.get('pk'))
+        return HttpResponseRedirect(reverse('class_detail', kwargs.get('pk')))
+
 
 class ClassRemoveStudent(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         school_class = SchoolClass.objects.get(pk=kwargs.get('class'))
         student = Student.objects.get(pk=kwargs.get('student'))
-        school_class.students.remove(student)
+        SchoolClassStudent.objects.get(school_class=school_class, student=student).delete()
         return reverse('class_detail', args=[kwargs.get('class')])
 
 class SubjectList(BreadcrumbMixin, ListView):

@@ -18,14 +18,24 @@
     </div>
 {% endblock %}
 
-
-{% block custom_inputs %}
-    <ul id="id_{{ field.name }}">
-        {% for pk, choice in field.field.widget.choices %}
+{% block fields_loop %}
+    <ul>
+        {% for key, form in forms.items %}
             <li>
                 <p>
-                    <input {% if pk in defaults %} checked {% endif %} type="checkbox" name="{{ field.name }}" value="{{ pk }}" id="id_{{ field.name }}_{{ forloop.counter0 }}"/>
-                    <label for="id_{{ field.name }}_{{ forloop.counter0 }}"> {{ choice }} </label>
+                    <div class="row">
+                        <div class="col s4">
+                            <input {% if key in defaults %} checked {% endif %} type="checkbox" id="{{ key }}">
+                            <label for="{{ key }}"> {{ form.label }} </label>
+                        </div>
+                        <div class="col s8">
+                            <div class="input-field inline">
+                                {{ form.number }}
+                            </div>
+                        </div>
+                    </div>
+                    {# <input {% if form in defaults %} checked {% endif %} type="checkbox" id="id_{{ field.name }}_{{ forloop.counter0 }}"/>#}
+                    {# <label for="id_{{ field.name }}_{{ forloop.counter0 }}"> {{ choice }} </label>#}
                 </p>
             </li>
         {% endfor %}

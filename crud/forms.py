@@ -1,16 +1,23 @@
-from .models import SchoolClass, Student, Grade, Subject
+from .models import SchoolClass, SchoolClassStudent, Student, Grade, Subject
 from django import forms
 
 class ClassAddStudentForm(forms.ModelForm):
-    students = forms.ModelMultipleChoiceField(
-        widget = forms.CheckboxSelectMultiple(),
-        queryset = Student.objects.all(),
-        required = False
-    )
+    number = forms.IntegerField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        student_instance = kwargs.pop('student_instance')
+        super().__init__(*args, **kwargs)
+
+        self.fields['student'] = forms.ModelChoiceField(
+            label = str(student_instance),
+            widget = forms.CheckboxInput(),
+            queryset = Student.objects.filter(pk=student_instance.pk),
+            required = False
+        )
 
     class Meta:
-        model = SchoolClass
-        fields = ('students',)
+        model = SchoolClassStudent
+        fields = ('student', 'number')
 
 class MyModelMultipleChoiceField(forms.ModelMultipleChoiceField):
     def label_from_instance(self, obj):
