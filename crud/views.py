@@ -167,6 +167,7 @@ class ClassDetail(BreadcrumbMixin, DetailView):
             approved = overall >= obj.avg
 
             students_info.append({
+                'number' : StudentClassNumber.objects.get(student=student, school_class=obj).number,
                 'name' : student.name,
                 'url' : reverse('student_detail', args=[student.registry]),
                 'averages_list' : averages_list,
