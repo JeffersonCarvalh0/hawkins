@@ -18,7 +18,6 @@
     </div>
 {% endblock %}
 
-
 {% block custom_inputs %}
     <ul id="id_{{ field.name }}">
         {% for pk, choice in field.field.widget.choices %}
@@ -26,6 +25,8 @@
                 <p>
                     <input {% if pk in defaults %} checked {% endif %} type="checkbox" name="{{ field.name }}" value="{{ pk }}" id="id_{{ field.name }}_{{ forloop.counter0 }}"/>
                     <label for="id_{{ field.name }}_{{ forloop.counter0 }}"> {{ choice }} </label>
+                    <input id="number_{{ pk }}" class="" type="number" name="number_{{ pk }}" placeholder="{% trans 'Number' %}">
+                    {# <label for="number_{{ pk }}"> {% trans "Number" %} </label>#}
                 </p>
             </li>
         {% endfor %}
