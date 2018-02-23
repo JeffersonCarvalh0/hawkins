@@ -203,6 +203,10 @@ class ClassRegisterFromExisting(BreadcrumbMixin, CreateView):
         self.object = form.save()
         for subject in form.cleaned_data['subjects']:
             Subject.objects.create(name=subject.name, school_class=self.object)
+
+        for student in form.cleaned_data['students']:
+            number = StudentClassNumber.objects.get(school_class__pk=self.kwargs.get('pk'), student=student).number
+            StudentClassNumber.objects.create(student=student, school_class=self.object, number=number)
         return HttpResponseRedirect(self.get_success_url())
 
 class ClassUpdate(BreadcrumbMixin, UpdateView):
