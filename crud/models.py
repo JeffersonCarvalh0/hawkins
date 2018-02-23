@@ -128,3 +128,15 @@ class SchoolClass(models.Model):
         if pk_only:
             return [student.pk for student in approved]
         return approved
+
+class StudentClassNumber(models.Model):
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    school_class = models.ForeignKey('SchoolClass', on_delete=models.CASCADE)
+    number = models.SmallIntegerField(_('Number'))
+
+    class Meta:
+        verbose_name = _('Student class number')
+        ordering = ('number',)
+
+    def __str__(self):
+        return "%s, %s, %d" %(self.student.name, self.school_class.name, self.number)
