@@ -1,5 +1,5 @@
 from .forms import ClassAddStudentForm, CreateClassFromExistingForm
-from .models import Student, SchoolClass, Subject, Grade, Settings as hawkins_settings
+from .models import Student, SchoolClass, StudentClassNumber, Subject, Grade, Settings as hawkins_settings
 from .utils import total_average
 from django import forms
 from django.forms import modelform_factory, modelformset_factory
@@ -225,8 +225,22 @@ class ClassAddStudent(BreadcrumbMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['defaults'] = [student for student in self.object.students.all().values_list('registry', flat=True)]
+        context['defaults'] = [student.pk for student in self.object.students.all()]
+
+        student_class_numbers = {}
+        for class_number in StudentClassNumber.objects.filter(school_class=self.object):
+            student_class_numbers[class_number.student.pk] = class_number.number
+        context['student_class_numbers'] = student_class_numbers
+        print(context['student_class_numbers'])
         return context
+
+    def form_valid(self, form):
+        school_class = form.save()
+        for student in form.cleaned_data['students']:
+            print('Creating numbers for student %s' %(student.name))
+            number = self.request.POST.get('number_%s' %(student.pk))
+            StudentClassNumber.objects.update_or_create(student=student, school_class=school_class, defaults={'number' : number})
+        return HttpResponseRedirect(reverse('class_detail', args=[school_class.pk]))
 
 class ClassRemoveStudent(RedirectView):
     def get_redirect_url(self, *args, **kwargs):

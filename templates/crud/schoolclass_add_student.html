@@ -25,8 +25,7 @@
                 <p>
                     <input {% if pk in defaults %} checked {% endif %} type="checkbox" name="{{ field.name }}" value="{{ pk }}" id="id_{{ field.name }}_{{ forloop.counter0 }}"/>
                     <label for="id_{{ field.name }}_{{ forloop.counter0 }}"> {{ choice }} </label>
-                    <input id="number_{{ pk }}" class="" type="number" name="number_{{ pk }}" placeholder="{% trans 'Number' %}">
-                    {# <label for="number_{{ pk }}"> {% trans "Number" %} </label>#}
+                    <input type="number" name="number_{{ pk }}" placeholder="{% trans 'Number' %}" value="{{ student_class_numbers|get_item:pk }}"/>
                 </p>
             </li>
         {% endfor %}
